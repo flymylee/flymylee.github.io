@@ -102,12 +102,12 @@ repository               : "flymylee/flymylee.github.io" # GitHub username/repo-
 #    anonymize_ip         : # true, false (default)
 #
 #
-## Site Author
-#author:
-#  name             : "Mooyeon LEE"
-#  avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-#  bio              : "I am an curious man."
-#  location         : "Republic of Korea"
+# Site Author
+author:
+  name             : "Mooyeon LEE"
+  avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
+  bio              : "I am an curious man."
+  location         : "Republic of Korea"
 #  email            :
 #  links:
 #    - label: "Email"
