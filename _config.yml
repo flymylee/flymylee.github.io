@@ -105,7 +105,7 @@ repository               : "flymylee/flymylee.github.io" # GitHub username/repo-
 # Site Author
 author:
   name             : "Mooyeon LEE"
-  avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
+#  avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "I am an curious man."
   location         : "Republic of Korea"
 #  email            :
