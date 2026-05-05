@@ -1,0 +1,1672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Homepage Sample — Powered by Wicner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700;900&family=Noto+Sans+KR:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #faf7f2;
+  --warm-white: #f5f0e8;
+  --ink: #1c1a17;
+  --gold: #b8943f;
+  --gold-light: #e8d5a3;
+  --gold-pale: #f7f0dc;
+  --green: #2a5c45;
+  --green-light: #e8f2ec;
+  --red: #c0392b;
+  --muted: #7a7060;
+  --border: rgba(184,148,63,0.2);
+  --shadow: 0 4px 32px rgba(28,26,23,0.08);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 300;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ── DEMO BANNER ── */
+.demo-banner {
+  background: var(--ink);
+  color: var(--gold-light);
+  text-align: center;
+  padding: 0.6rem 1rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+}
+.demo-banner strong { color: #fff; }
+
+/* ── SELECTOR ── */
+.selector-bar {
+  background: var(--warm-white);
+  border-bottom: 1px solid var(--border);
+  padding: 0;
+  position: sticky;
+  top: 33px;
+  z-index: 100;
+}
+.selector-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: stretch;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.selector-inner::-webkit-scrollbar { display: none; }
+
+.category-group {
+  display: flex;
+  align-items: center;
+  border-right: 1px solid var(--border);
+  padding: 0 0.5rem;
+}
+.category-group:last-child { border-right: none; }
+
+.cat-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 0 0.75rem;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.biz-btn {
+  background: none;
+  border: none;
+  padding: 1rem 1.1rem;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.biz-btn:hover { color: var(--ink); }
+.biz-btn.active {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+  font-weight: 500;
+}
+.biz-btn .icon { font-size: 1rem; }
+
+/* ── PAGES ── */
+.biz-page { display: none; }
+.biz-page.active { display: block; }
+
+/* ── COMMON SECTIONS ── */
+section { padding: 5rem 1.5rem; }
+.container { max-width: 900px; margin: 0 auto; }
+.section-tag {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: 6rem 1.5rem 4rem;
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.hero-pattern {
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 40px, var(--ink) 40px, var(--ink) 41px),
+    repeating-linear-gradient(90deg, transparent, transparent 40px, var(--ink) 40px, var(--ink) 41px);
+}
+.hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+}
+.hero-orb-1 { width:500px; height:500px; background:rgba(184,148,63,0.1); top:-100px; right:-100px; }
+.hero-orb-2 { width:300px; height:300px; background:rgba(42,92,69,0.08); bottom:-50px; left:-50px; }
+
+.hero-content { position: relative; z-index: 1; max-width: 700px; }
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--gold-pale);
+  border: 1px solid var(--gold-light);
+  padding: 0.4rem 1rem;
+  border-radius: 2rem;
+  font-size: 0.75rem;
+  color: var(--gold);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  margin-bottom: 2rem;
+}
+.hero-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: clamp(2rem, 6vw, 3.8rem);
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  margin-bottom: 1.5rem;
+}
+.hero-title .accent {
+  color: var(--gold);
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 400;
+}
+.hero-sub {
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  color: #5a5040;
+  line-height: 1.9;
+  max-width: 540px;
+  margin-bottom: 2.5rem;
+}
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--ink);
+  color: var(--cream);
+  padding: 0.9rem 1.8rem;
+  border-radius: 0.25rem;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background 0.2s, transform 0.2s;
+}
+.hero-cta:hover { background: var(--green); transform: translateY(-1px); }
+.hero-cta-2 {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--muted);
+  padding: 0.9rem 1.2rem;
+  font-size: 0.88rem;
+  text-decoration: none;
+  transition: color 0.2s;
+  margin-left: 0.5rem;
+}
+.hero-cta-2:hover { color: var(--ink); }
+
+/* ── INFO STRIP ── */
+.info-strip {
+  background: var(--ink);
+  color: var(--cream);
+  padding: 1.5rem;
+}
+.info-strip .container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  align-items: center;
+  justify-content: space-between;
+}
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.88rem;
+}
+.info-icon { font-size: 1.2rem; }
+.info-label { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: #7a7060; margin-bottom: 0.1rem; }
+.info-value { color: var(--cream); font-weight: 400; }
+.info-value.open { color: #6ec99a; font-weight: 500; }
+.info-value.closed { color: #e88080; font-weight: 500; }
+
+.update-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(184,148,63,0.15);
+  border: 1px solid rgba(184,148,63,0.3);
+  color: var(--gold-light);
+  font-size: 0.7rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 2rem;
+  letter-spacing: 0.05em;
+}
+.update-dot { width:6px; height:6px; background:var(--gold); border-radius:50%; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+/* ── NOTICE ── */
+.notice-bar {
+  background: var(--gold-pale);
+  border-top: 1px solid var(--gold-light);
+  border-bottom: 1px solid var(--gold-light);
+  padding: 0.9rem 1.5rem;
+}
+.notice-bar .container {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.88rem;
+  color: #5a4a20;
+}
+.notice-icon { font-size: 1rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+/* ── MAP ── */
+.map-section { background: var(--warm-white); padding: 4rem 1.5rem; }
+.map-mock {
+  background: #e8e4dc;
+  border-radius: 0.5rem;
+  height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  margin-top: 2rem;
+}
+.map-mock::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(0deg, transparent, transparent 30px, rgba(0,0,0,0.04) 30px, rgba(0,0,0,0.04) 31px),
+    repeating-linear-gradient(90deg, transparent, transparent 30px, rgba(0,0,0,0.04) 30px, rgba(0,0,0,0.04) 31px);
+}
+.map-pin {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+.map-pin-dot {
+  width: 40px; height: 40px;
+  background: var(--red);
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  margin: 0 auto 0.5rem;
+  box-shadow: 0 4px 12px rgba(192,57,43,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.map-pin-dot::after {
+  content: '';
+  width: 14px; height: 14px;
+  background: #fff;
+  border-radius: 50%;
+  transform: rotate(45deg);
+}
+.map-address {
+  background: #fff;
+  padding: 0.6rem 1.25rem;
+  border-radius: 0.5rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+  color: var(--ink);
+}
+
+.hours-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+.hour-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 1rem;
+  background: #fff;
+  border-radius: 0.4rem;
+  font-size: 0.85rem;
+  border: 1px solid var(--border);
+}
+.hour-day { color: var(--muted); }
+.hour-time { font-weight: 500; }
+.hour-time.today { color: var(--green); font-weight: 700; }
+.hour-time.closed-day { color: #ccc; }
+
+/* ── MENU / PRICING ── */
+.menu-section { background: var(--cream); }
+.menu-category {
+  margin-bottom: 3rem;
+}
+.menu-category-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ink);
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+.menu-item {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.menu-item:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+.menu-item-info { flex: 1; }
+.menu-item-name {
+  font-weight: 500;
+  font-size: 0.92rem;
+  margin-bottom: 0.3rem;
+  color: var(--ink);
+}
+.menu-item-desc {
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.menu-item-tag {
+  display: inline-block;
+  font-size: 0.65rem;
+  background: var(--green-light);
+  color: var(--green);
+  padding: 0.15rem 0.5rem;
+  border-radius: 1rem;
+  margin-top: 0.4rem;
+  font-weight: 500;
+}
+.menu-item-tag.popular { background: var(--gold-pale); color: var(--gold); }
+.menu-item-price {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-left: 1rem;
+  white-space: nowrap;
+}
+
+/* ── BOOKING FORM ── */
+.booking-section { background: var(--warm-white); }
+.booking-form {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 2.5rem;
+  margin-top: 2rem;
+  max-width: 600px;
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.form-group { margin-bottom: 1rem; }
+.form-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  margin-bottom: 0.4rem;
+  text-transform: uppercase;
+}
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 0.35rem;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 0.88rem;
+  color: var(--ink);
+  background: var(--cream);
+  transition: border-color 0.2s;
+  outline: none;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color: var(--gold);
+}
+.form-textarea { height: 100px; resize: vertical; }
+.form-submit {
+  background: var(--ink);
+  color: var(--cream);
+  border: none;
+  padding: 0.9rem 2rem;
+  border-radius: 0.35rem;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+.form-submit:hover { background: var(--green); transform: translateY(-1px); }
+
+/* ── KAKAO UPDATE DEMO ── */
+.kakao-demo {
+  background: var(--ink);
+  color: var(--cream);
+  padding: 4rem 1.5rem;
+}
+.kakao-demo .container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+@media (max-width: 700px) { .kakao-demo .container { grid-template-columns: 1fr; gap: 2rem; } }
+
+.kakao-explain h3 {
+  font-family: 'Noto Serif KR', serif;
+  font-size: clamp(1.3rem, 3vw, 1.9rem);
+  font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: 1.25rem;
+}
+.kakao-explain p {
+  color: #a09880;
+  font-size: 0.9rem;
+  line-height: 1.9;
+  margin-bottom: 1rem;
+}
+.kakao-examples {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+.kakao-example-msg {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.82rem;
+  color: #d0c8b8;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.msg-arrow { color: var(--gold); font-size: 0.9rem; }
+.msg-result { color: #6ec99a; font-size: 0.78rem; }
+
+.kakao-phone {
+  background: #fff;
+  border-radius: 2rem;
+  padding: 1.5rem 1rem;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  max-width: 280px;
+  margin: 0 auto;
+}
+.phone-header {
+  text-align: center;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 1rem;
+}
+.phone-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #3C1E1E;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+}
+.kakao-yellow { color: #856404; background: #FEE500; width:24px;height:24px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:900; }
+.chat-bubble {
+  padding: 0.6rem 0.9rem;
+  border-radius: 0.75rem;
+  font-size: 0.78rem;
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+  max-width: 85%;
+  color: #1c1a17;
+}
+.chat-owner {
+  background: #FEE500;
+  margin-left: auto;
+  border-radius: 0.75rem 0 0.75rem 0.75rem;
+}
+.chat-bot {
+  background: #f2f2f2;
+  border-radius: 0 0.75rem 0.75rem 0.75rem;
+}
+.chat-bot-name {
+  font-size: 0.65rem;
+  color: #888;
+  margin-bottom: 0.3rem;
+}
+.chat-time { font-size: 0.6rem; color: #bbb; text-align: right; margin-top: 0.2rem; }
+
+/* ── FOOTER / CONTACT ── */
+.contact-section {
+  background: var(--warm-white);
+  padding: 4rem 1.5rem;
+  text-align: center;
+  border-top: 1px solid var(--border);
+}
+.contact-section h2 {
+  font-family: 'Noto Serif KR', serif;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 900;
+  margin-bottom: 0.75rem;
+}
+.contact-section p {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-bottom: 2rem;
+}
+.contact-btns {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.btn-kakao {
+  background: #FEE500;
+  color: #3C1E1E;
+  padding: 0.85rem 1.75rem;
+  border-radius: 0.35rem;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.88rem;
+  display: flex; align-items: center; gap: 0.5rem;
+  transition: transform 0.2s;
+}
+.btn-kakao:hover { transform: translateY(-1px); }
+.btn-phone {
+  background: var(--green);
+  color: #fff;
+  padding: 0.85rem 1.75rem;
+  border-radius: 0.35rem;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.88rem;
+  display: flex; align-items: center; gap: 0.5rem;
+  transition: transform 0.2s;
+}
+.btn-phone:hover { transform: translateY(-1px); }
+
+/* ── VEXMP TAG ── */
+.vexmp-tag {
+  text-align: center;
+  padding: 1.25rem;
+  background: var(--ink);
+  color: #484030;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+}
+.vexmp-tag a { color: var(--gold); text-decoration: none; opacity: 0.7; }
+.vexmp-tag a:hover { opacity: 1; }
+
+/* ── SPECIALS ── */
+.specials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.special-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  text-align: center;
+  transition: transform 0.2s;
+}
+.special-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+.special-emoji { font-size: 2rem; margin-bottom: 0.75rem; }
+.special-name { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.4rem; }
+.special-price {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--gold);
+}
+.special-unit { font-size: 0.72rem; color: var(--muted); }
+.special-badge {
+  display: inline-block;
+  background: var(--red);
+  color: #fff;
+  font-size: 0.65rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 1rem;
+  margin-top: 0.5rem;
+  font-weight: 500;
+}
+
+@media (max-width: 640px) {
+  .form-row { grid-template-columns: 1fr; }
+  .info-strip .container { flex-direction: column; gap: 1rem; }
+}
+
+/* ── FADE IN ── */
+.fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s; }
+.fade-in.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<!-- demo banner -->
+<div class="demo-banner">
+  <strong>SAMPLE</strong> — This sample site is powered by Wicner — AI Agent for Small Business
+</div>
+
+<!-- business selector bar -->
+<nav class="selector-bar">
+  <div class="selector-inner">
+
+    <div class="category-group">
+      <span class="cat-label">📅 Booking</span>
+      <button class="biz-btn active" onclick="showBiz('salon')">
+        <span class="icon">✂️</span> Hair Salon
+      </button>
+      <button class="biz-btn" onclick="showBiz('academy')">
+        <span class="icon">📚</span> Tutoring Center
+      </button>
+      <button class="biz-btn" onclick="showBiz('travel')">
+        <span class="icon">✈️</span> Travel Agency
+      </button>
+    </div>
+
+    <div class="category-group">
+      <span class="cat-label">🍽️ Menu</span>
+      <button class="biz-btn" onclick="showBiz('restaurant')">
+        <span class="icon">🍜</span> Korean Restaurant
+      </button>
+      <button class="biz-btn" onclick="showBiz('banchan')">
+        <span class="icon">🥗</span> Banchan (Meal Prep)
+      </button>
+    </div>
+
+    <div class="category-group">
+      <span class="cat-label">ℹ️ Info</span>
+      <button class="biz-btn" onclick="showBiz('karaoke')">
+        <span class="icon">🎤</span> Karaoke
+      </button>
+      <button class="biz-btn" onclick="showBiz('pharmacy')">
+        <span class="icon">💊</span> Pharmacy
+      </button>
+      <button class="biz-btn" onclick="showBiz('optical')">
+        <span class="icon">👓</span> Optical Store
+      </button>
+    </div>
+
+  </div>
+</nav>
+
+
+<!-- ══════════════════════════════════ -->
+<!-- ✂️ Hair Salon -->
+<!-- ══════════════════════════════════ -->
+<div id="page-salon" class="biz-page active">
+
+  <div class="hero">
+    <div class="hero-bg">
+      <div class="hero-pattern"></div>
+      <div class="hero-orb hero-orb-1"></div>
+      <div class="hero-orb hero-orb-2"></div>
+    </div>
+    <div class="container hero-content">
+      <div class="hero-eyebrow">✂️ Hair Salon · Nail Shop</div>
+      <h1 class="hero-title">
+        Every strand, every style —<br>crafted with <span class="accent">care</span>
+      </h1>
+      <p class="hero-sub">
+        Serving Finch Street for 12 years.<br>
+        We remember every regular, every style.
+      </p>
+      <a href="#salon-booking" class="hero-cta">💬 Book Now</a>
+      <a href="#salon-menu" class="hero-cta-2">View Services →</a>
+    </div>
+  </div>
+
+  <div class="info-strip">
+    <div class="container">
+      <div class="info-item">
+        <span class="info-icon">📍</span>
+        <div>
+          <div class="info-label">Address</div>
+          <div class="info-value">5521 Yonge St, North York, ON</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <span class="info-icon">🕐</span>
+        <div>
+          <div class="info-label">Today's Hours</div>
+          <div class="info-value open">10:00 — 20:00 Open now</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <span class="info-icon">📞</span>
+        <div>
+          <div class="info-label">Phone</div>
+          <div class="info-value">(416) 555-0182</div>
+        </div>
+      </div>
+      <div class="update-badge">
+        <span class="update-dot"></span>
+        Live updates via SMS
+      </div>
+    </div>
+  </div>
+
+  <div class="notice-bar">
+    <div class="container">
+      <span class="notice-icon">📢</span>
+      <span><strong>Notice:</strong> Closed on Tue May 20 (Victoria Day long weekend). For holiday hours, check our SMS channel.</span>
+    </div>
+  </div>
+
+  <section id="salon-menu" class="menu-section fade-in">
+    <div class="container">
+      <p class="section-tag">Services & Pricing</p>
+      <h2 style="font-family:'Noto Serif KR',serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:900;margin-bottom:0.5rem;">Services &amp; Pricing</h2>
+      <p style="color:var(--muted);font-size:0.88rem;margin-bottom:2.5rem;">Prices may vary by hair length and condition. Text us before your visit.</p>
+
+      <div class="menu-category">
+        <div class="menu-category-title">✂️ Cuts</div>
+        <div class="menu-grid">
+          <div class="menu-item">
+            <div class="menu-item-info">
+              <div class="menu-item-name">Regular Cut</div>
+              <div class="menu-item-desc">Shampoo included</div>
+              <span class="menu-item-tag popular">Popular</span>
+            </div>
+            <div class="menu-item-price">$35+</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-info">
+              <div class="menu-item-name">Layered Cut</div>
+              <div class="menu-item-desc">Volume &amp; flow styling</div>
+            </div>
+            <div class="menu-item-price">$50+</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-info">
+              <div class="menu-item-name">Men's Cut</div>
+              <div class="menu-item-desc">Shampoo + styling</div>
+              <span class="menu-item-tag popular">Popular</span>
+            </div>
+            <div class="menu-item-price">$28+</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-category">
+        <div class="menu-category-title">🎨 Color</div>
+        <div class="menu-grid">
+          <div class="menu-item">
+            <div class="menu-item-info">
+              <div class="menu-item-name">Full Color</div>
+              <div class="menu-item-desc">Single color, cut separate</div>
+            </div>
+            <div class="menu-item-price">$80+</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-info">
+              <div class="menu-item-name">Highlights</div>
+              <div class="menu-item-desc">Partial or full</div>
+              <span class="menu-item-tag popular">Popular</span>
+            </div>
+            <div class="menu-item-price">$120+</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-info">
+              <div class="menu-item-name">Bleach</div>
+              <div class="menu-item-desc">Hair consultation required</div>
+            </div>
+            <div class="menu-item-price">$100+</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="salon-booking" class="booking-section fade-in">
+    <div class="container">
+      <p class="section-tag">Reservation</p>
+      <h2 style="font-family:'Playfair Display',serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:900;">Make a Reservation</h2>
+      <div class="booking-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Name</label>
+            <input type="text" class="form-input" placeholder="Jane Smith">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone</label>
+            <input type="text" class="form-input" placeholder="(416) 000-0000">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Preferred Date</label>
+            <input type="date" class="form-input">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Preferred Time</label>
+            <select class="form-select">
+              <option>10:00</option><option>11:00</option><option>12:00</option>
+              <option>13:00</option><option>14:00</option><option>15:00</option>
+              <option>16:00</option><option>17:00</option><option>18:00</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Service</label>
+          <select class="form-select">
+            <option>Regular Cut</option><option>Layered Cut</option>
+            <option>Men's Cut</option><option>Full Color</option>
+            <option>Highlights</option><option>Other (please specify below)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Notes</label>
+          <textarea class="form-textarea" placeholder="Describe your preferred style or paste a reference image link."></textarea>
+        </div>
+        <button class="form-submit">Send Booking Request</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="map-section fade-in">
+    <div class="container">
+      <p class="section-tag">Location</p>
+      <h2 style="font-family:'Noto Serif KR',serif;font-weight:900;">How to Find Us</h2>
+      <div class="map-mock">
+        <div class="map-pin">
+          <div class="map-pin-dot"></div>
+          <div class="map-address">📍 5521 Yonge St, North York</div>
+        </div>
+      </div>
+      <div class="hours-grid" style="margin-top:2rem;">
+        <div class="hour-row"><span class="hour-day">Mon</span><span class="hour-time">10:00 — 20:00</span></div>
+        <div class="hour-row"><span class="hour-day">Tue</span><span class="hour-time today">10:00 — 20:00 ◀ Today</span></div>
+        <div class="hour-row"><span class="hour-day">Wed</span><span class="hour-time">10:00 — 20:00</span></div>
+        <div class="hour-row"><span class="hour-day">Thu</span><span class="hour-time">10:00 — 20:00</span></div>
+        <div class="hour-row"><span class="hour-day">Fri</span><span class="hour-time">10:00 — 21:00</span></div>
+        <div class="hour-row"><span class="hour-day">Sat</span><span class="hour-time">9:00 — 19:00</span></div>
+        <div class="hour-row"><span class="hour-day">Sun</span><span class="hour-time closed-day">Closed</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-section fade-in">
+    <div class="container">
+      <h2>Get in Touch</h2>
+      <p>Booking changes, pricing questions, style consultations — just text us anytime.</p>
+      <div class="contact-btns">
+        <a href="#" class="btn-kakao">💬 Text Us</a>
+        <a href="tel:4165550182" class="btn-phone">📞 Call Us</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════ -->
+<!-- 🍜 Korean Restaurant -->
+<!-- ══════════════════════════════════ -->
+<div id="page-restaurant" class="biz-page">
+
+  <div class="hero">
+    <div class="hero-bg">
+      <div class="hero-pattern"></div>
+      <div class="hero-orb hero-orb-1" style="background:rgba(42,92,69,0.1)"></div>
+      <div class="hero-orb hero-orb-2" style="background:rgba(184,148,63,0.08)"></div>
+    </div>
+    <div class="container hero-content">
+      <div class="hero-eyebrow">🍜 Korean Restaurant</div>
+      <h1 class="hero-title">
+        Homestyle Korean cooking,<br>honest and <span class="accent">hearty</span>
+      </h1>
+      <p class="hero-sub">
+        15 years in Toronto. Same broth, same care.<br>
+        We make our stock from scratch every morning.
+      </p>
+      <a href="#restaurant-menu" class="hero-cta">🍽️ View Menu</a>
+    </div>
+  </div>
+
+  <div class="info-strip">
+    <div class="container">
+      <div class="info-item">
+        <span class="info-icon">📍</span>
+        <div>
+          <div class="info-label">Address</div>
+          <div class="info-value">6380 Yonge St, North York, ON</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <span class="info-icon">🕐</span>
+        <div>
+          <div class="info-label">Lunch / Dinner</div>
+          <div class="info-value open">11:30—15:00 / 17:00—21:30</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <span class="info-icon">🚗</span>
+        <div>
+          <div class="info-label">Parking</div>
+          <div class="info-value">Free parking for 10 cars behind building</div>
+        </div>
+      </div>
+      <div class="update-badge">
+        <span class="update-dot"></span>
+        Live updates via SMS
+      </div>
+    </div>
+  </div>
+
+  <div class="notice-bar">
+    <div class="container">
+      <span class="notice-icon">🍱</span>
+      <span><strong>Today's Special:</strong> Doenjang Jjigae + rice + 3 banchan sides — Lunch Special <strong>$14.99</strong> (Weekdays 11:30–14:00)</span>
+    </div>
+  </div>
+
+  <section id="restaurant-menu" class="menu-section fade-in">
+    <div class="container">
+      <p class="section-tag">Menu & Pricing</p>
+      <h2 style="font-family:'Noto Serif KR',serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:900;margin-bottom:2.5rem;">Menu</h2>
+
+      <div class="menu-category">
+        <div class="menu-category-title">🍲 Jjigae &amp; Gukbap</div>
+        <div class="menu-grid">
+          <div class="menu-item">
+            <div class="menu-item-info">
+              <div class="menu-item-name">Sundubu Jjigae</div>
+              <div class="menu-item-desc">Rice included</div>
+              <span class="menu-item-tag popular">Best</span>
+            </div>
+            <div class="menu-item-price">$17</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-info">
+              <div class="menu-item-name">Doenjang Jjigae</div>
+              <div class="menu-item-desc">Rice included</div>
+            </div>
+            <div class="menu-item-price">$16</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-info">
+              <div class="menu-item-name">Seolleongtang</div>
+              <div class="menu-item-desc">12-hour ox bone broth</div>
+              <span class="menu-item-tag popular">Best</span>
+            </div>
+            <div class="menu-item-price">$19</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-info">
+              <div class="menu-item-name">Budae Jjigae</div>
+              <div class="menu-item-desc">For 2+ / per person</div>
+            </div>
+            <div class="menu-item-price">$18/pp</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-category">
+        <div class="menu-category-title">🥩 Korean BBQ</div>
+        <div class="menu-grid">
+          <div class="menu-item">
+            <div class="menu-item-info">
+              <div class="menu-item-name">Samgyeopsal</div>
+              <div class="menu-item-desc">200g · Ssam veggies included</div>
+              <span class="menu-item-tag popular">Popular</span>
+            </div>
+            <div class="menu-item-price">$28</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-info">
+              <div class="menu-item-name">Bulgogi</div>
+              <div class="menu-item-desc">200g · Rice separate</div>
+            </div>
+            <div class="menu-item-price">$26</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="map-section fade-in">
+    <div class="container">
+      <p class="section-tag">Location</p>
+      <h2 style="font-family:'Noto Serif KR',serif;font-weight:900;">How to Find Us</h2>
+      <div class="map-mock">
+        <div class="map-pin">
+          <div class="map-pin-dot"></div>
+          <div class="map-address">📍 6380 Yonge St, North York</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-section fade-in">
+    <div class="container">
+      <h2>Group Reservations</h2>
+      <p>For groups of 10 or more, please text us in advance.</p>
+      <div class="contact-btns">
+        <a href="#" class="btn-kakao">💬 Text Us</a>
+        <a href="tel:4165550299" class="btn-phone">📞 Call Us</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════ -->
+<!-- 🎤 Karaoke -->
+<!-- ══════════════════════════════════ -->
+<div id="page-karaoke" class="biz-page">
+
+  <div class="hero">
+    <div class="hero-bg">
+      <div class="hero-pattern"></div>
+      <div class="hero-orb hero-orb-1" style="background:rgba(184,148,63,0.12)"></div>
+      <div class="hero-orb hero-orb-2" style="background:rgba(192,57,43,0.06)"></div>
+    </div>
+    <div class="container hero-content">
+      <div class="hero-eyebrow">🎤 Karaoke</div>
+      <h1 class="hero-title">
+        One coin,<br><span class="accent">one song</span>
+      </h1>
+      <p class="hero-sub">
+        The cleanest karaoke spot on Sheppard Ave.<br>
+        New K-pop songs added weekly. Solo singers welcome.
+      </p>
+      <a href="#karaoke-info" class="hero-cta">💰 Pricing</a>
+    </div>
+  </div>
+
+  <div class="info-strip">
+    <div class="container">
+      <div class="info-item">
+        <span class="info-icon">📍</span>
+        <div>
+          <div class="info-label">Address</div>
+          <div class="info-value">4880 Sheppard Ave E, Scarborough</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <span class="info-icon">🕐</span>
+        <div>
+          <div class="info-label">Hours</div>
+          <div class="info-value open">12:00 — 24:00 daily</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <span class="info-icon">🚇</span>
+        <div>
+          <div class="info-label">Transit</div>
+          <div class="info-value">5 min bus from Sheppard-Yonge station</div>
+        </div>
+      </div>
+      <div class="update-badge">
+        <span class="update-dot"></span>
+        Live updates via SMS
+      </div>
+    </div>
+  </div>
+
+  <div class="notice-bar">
+    <div class="container">
+      <span class="notice-icon">🎉</span>
+      <span><strong>Event:</strong> Weekday Happy Hour 12–5 PM — 20% bonus coins! Until end of May.</span>
+    </div>
+  </div>
+
+  <section id="karaoke-info" style="background:var(--cream); padding:5rem 1.5rem;" class="fade-in">
+    <div class="container">
+      <p class="section-tag">Pricing</p>
+      <h2 style="font-family:'Noto Serif KR',serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:900;margin-bottom:2.5rem;">Pricing</h2>
+      <div class="specials-grid">
+        <div class="special-card">
+          <div class="special-emoji">🪙</div>
+          <div class="special-name">1 Coin</div>
+          <div class="special-price">$1</div>
+          <div class="special-unit">= 1 song</div>
+        </div>
+        <div class="special-card">
+          <div class="special-emoji">🎁</div>
+          <div class="special-name">12 Coins</div>
+          <div class="special-price">$10</div>
+          <div class="special-unit">Includes 2 bonus coins</div>
+          <span class="special-badge">BEST</span>
+        </div>
+        <div class="special-card">
+          <div class="special-emoji">🏆</div>
+          <div class="special-name">30 Coins</div>
+          <div class="special-price">$25</div>
+          <div class="special-unit">Includes 5 bonus coins</div>
+          <span class="special-badge">Value</span>
+        </div>
+        <div class="special-card">
+          <div class="special-emoji">⭐</div>
+          <div class="special-name">Monthly Membership</div>
+          <div class="special-price">$39</div>
+          <div class="special-unit">45 coins/month</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="map-section fade-in">
+    <div class="container">
+      <p class="section-tag">Location</p>
+      <h2 style="font-family:'Noto Serif KR',serif;font-weight:900;">How to Find Us</h2>
+      <div class="map-mock">
+        <div class="map-pin">
+          <div class="map-pin-dot"></div>
+          <div class="map-address">📍 4880 Sheppard Ave E, Scarborough</div>
+        </div>
+      </div>
+      <div class="hours-grid">
+        <div class="hour-row"><span class="hour-day">Mon–Fri</span><span class="hour-time">12:00 — 24:00</span></div>
+        <div class="hour-row"><span class="hour-day">Sat·Sun</span><span class="hour-time">11:00 — 01:00</span></div>
+        <div class="hour-row"><span class="hour-day">Holidays</span><span class="hour-time">Check for updates</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-section fade-in">
+    <div class="container">
+      <h2>Contact Us</h2>
+      <p>For group bookings and events, text us anytime.</p>
+      <div class="contact-btns">
+        <a href="#" class="btn-kakao">💬 Text Us</a>
+        <a href="tel:4165550341" class="btn-phone">📞 Call Us</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════ -->
+<!-- 📚 Tutoring Center -->
+<!-- ══════════════════════════════════ -->
+<div id="page-academy" class="biz-page">
+
+  <div class="hero">
+    <div class="hero-bg">
+      <div class="hero-pattern"></div>
+      <div class="hero-orb hero-orb-1" style="background:rgba(42,92,69,0.12)"></div>
+    </div>
+    <div class="container hero-content">
+      <div class="hero-eyebrow">📚 Tutoring Center</div>
+      <h1 class="hero-title">
+        We reach out<br>before you have to ask<span class="accent"></span>
+      </h1>
+      <p class="hero-sub">
+        We update parents before grades slip.<br>
+        Monthly reports. Teachers who reach out first.
+      </p>
+      <a href="#academy-booking" class="hero-cta">📋 Book Consultation</a>
+    </div>
+  </div>
+
+  <div class="info-strip">
+    <div class="container">
+      <div class="info-item">
+        <span class="info-icon">📍</span>
+        <div>
+          <div class="info-label">Address</div>
+          <div class="info-value">5765 Yonge St #202, North York</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <span class="info-icon">🕐</span>
+        <div>
+          <div class="info-label">Class Hours</div>
+          <div class="info-value open">Mon·Wed·Fri 15:30 — 20:00</div>
+        </div>
+      </div>
+      <div class="update-badge">
+        <span class="update-dot"></span>
+        Live updates via SMS
+      </div>
+    </div>
+  </div>
+
+  <section class="menu-section fade-in">
+    <div class="container">
+      <p class="section-tag">Programs & Tuition</p>
+      <h2 style="font-family:'Noto Serif KR',serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:900;margin-bottom:2.5rem;">Programs &amp; Tuition</h2>
+      <div class="menu-category">
+        <div class="menu-category-title">📐 Math</div>
+        <div class="menu-grid">
+          <div class="menu-item">
+            <div class="menu-item-info">
+              <div class="menu-item-name">Elementary Math (G1–G6)</div>
+              <div class="menu-item-desc">2x/week · 4–8 sessions/mo</div>
+              <span class="menu-item-tag popular">Popular</span>
+            </div>
+            <div class="menu-item-price">$280/mo</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-info">
+              <div class="menu-item-name">Middle School Math (G7–G9)</div>
+              <div class="menu-item-desc">2x/week · concepts + enrichment</div>
+            </div>
+            <div class="menu-item-price">$320/mo</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-info">
+              <div class="menu-item-name">High School Math (G10–G12)</div>
+              <div class="menu-item-desc">University prep included</div>
+              <span class="menu-item-tag popular">Popular</span>
+            </div>
+            <div class="menu-item-price">$380/mo</div>
+          </div>
+        </div>
+      </div>
+      <div class="menu-category">
+        <div class="menu-category-title">📝 English &amp; Korean</div>
+        <div class="menu-grid">
+          <div class="menu-item">
+            <div class="menu-item-info">
+              <div class="menu-item-name">English Reading &amp; Writing</div>
+              <div class="menu-item-desc">Grade 4 and up</div>
+            </div>
+            <div class="menu-item-price">$300/mo</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-info">
+              <div class="menu-item-name">Korean Language (Weekend)</div>
+              <div class="menu-item-desc">Sat 10:00–12:00</div>
+              <span class="menu-item-tag">Weekend</span>
+            </div>
+            <div class="menu-item-price">$180/mo</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="academy-booking" class="booking-section fade-in">
+    <div class="container">
+      <p class="section-tag">Consultation</p>
+      <h2 style="font-family:'Noto Serif KR',serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:900;">Free Consultation</h2>
+      <div class="booking-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Parent Name</label>
+            <input type="text" class="form-input" placeholder="Jane Smith">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone</label>
+            <input type="text" class="form-input" placeholder="(416) 000-0000">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Child's Grade</label>
+            <select class="form-select">
+              <option>G1</option><option>G2</option><option>G3</option>
+              <option>G4</option><option>G5</option><option>G6</option>
+              <option>G7</option><option>G8</option><option>G9</option>
+              <option>G10</option><option>G11</option><option>G12</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Subject</label>
+            <select class="form-select">
+              <option>Math</option><option>English</option>
+              <option>Math + English</option><option>Korean</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Current Concerns</label>
+          <textarea class="form-textarea" placeholder="Briefly describe your child's current challenges or goals."></textarea>
+        </div>
+        <button class="form-submit">Request Consultation</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="contact-section fade-in">
+    <div class="container">
+      <h2>Have Questions?</h2>
+      <p>Class schedules, level assessments, tuition — just text us anytime.</p>
+      <div class="contact-btns">
+        <a href="#" class="btn-kakao">💬 Text Us</a>
+        <a href="tel:4165550412" class="btn-phone">📞 Call Us</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════ -->
+<!-- ✈️ Travel Agency -->
+<!-- ══════════════════════════════════ -->
+<div id="page-travel" class="biz-page">
+  <div class="hero">
+    <div class="hero-bg"><div class="hero-pattern"></div>
+      <div class="hero-orb hero-orb-1" style="background:rgba(42,92,69,0.1)"></div>
+    </div>
+    <div class="container hero-content">
+      <div class="hero-eyebrow">✈️ Travel Agency</div>
+      <h1 class="hero-title">Book in your language,<br><span class="accent">travel with ease</span></h1>
+      <p class="hero-sub">Toronto departures to Korea, Southeast Asia, and Europe. Custom itineraries available.</p>
+      <a href="#travel-contact" class="hero-cta">✉️ Get a Quote</a>
+    </div>
+  </div>
+  <div class="info-strip">
+    <div class="container">
+      <div class="info-item"><span class="info-icon">📍</span><div><div class="info-label">Address</div><div class="info-value">5140 Yonge St #310, North York</div></div></div>
+      <div class="info-item"><span class="info-icon">🕐</span><div><div class="info-label">Consultation Hours</div><div class="info-value open">Mon–Fri 10:00–18:00</div></div></div>
+      <div class="update-badge"><span class="update-dot"></span>Live updates via SMS</div>
+    </div>
+  </div>
+  <section class="menu-section fade-in">
+    <div class="container">
+      <p class="section-tag">Popular Packages</p>
+      <h2 style="font-family:'Noto Serif KR',serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:900;margin-bottom:2.5rem;">Popular Packages</h2>
+      <div class="specials-grid">
+        <div class="special-card"><div class="special-emoji">🇰🇷</div><div class="special-name">Korea Round Trip</div><div class="special-price">$1,299</div><div class="special-unit">7박 9일~</div><span class="special-badge">Popular</span></div>
+        <div class="special-card"><div class="special-emoji">🇯🇵</div><div class="special-name">Japan: Osaka · Tokyo</div><div class="special-price">$1,499</div><div class="special-unit">5박 7일~</div></div>
+        <div class="special-card"><div class="special-emoji">🌴</div><div class="special-name">Vietnam: Da Nang</div><div class="special-price">$1,199</div><div class="special-unit">4박 6일~</div><span class="special-badge">Value</span></div>
+        <div class="special-card"><div class="special-emoji">🏛️</div><div class="special-name">Western Europe: 9 Countries</div><div class="special-price">$3,499</div><div class="special-unit">11박 13일~</div></div>
+      </div>
+    </div>
+  </section>
+  <div id="travel-contact" class="contact-section fade-in">
+    <div class="container">
+      <h2>Get a Quote</h2>
+      <p>Share your dates, group size, and budget — we'll get back to you with a custom quote.</p>
+      <div class="contact-btns">
+        <a href="#" class="btn-kakao">💬 Text Us</a>
+        <a href="tel:4165550521" class="btn-phone">📞 Call Us</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════ -->
+<!-- 🥗 Banchan (Meal Prep) -->
+<!-- ══════════════════════════════════ -->
+<div id="page-banchan" class="biz-page">
+  <div class="hero">
+    <div class="hero-bg"><div class="hero-pattern"></div>
+      <div class="hero-orb hero-orb-1" style="background:rgba(42,92,69,0.12)"></div>
+    </div>
+    <div class="container hero-content">
+      <div class="hero-eyebrow">🥗 Banchan (Meal Prep)</div>
+      <h1 class="hero-title">Less stress<br>at <span class="accent">dinnertime</span></h1>
+      <p class="hero-sub">Fresh Korean sides made every morning. No frozen stock — sold same day only.</p>
+      <a href="#banchan-menu" class="hero-cta">🛒 Today's Menu</a>
+    </div>
+  </div>
+  <div class="info-strip">
+    <div class="container">
+      <div class="info-item"><span class="info-icon">📍</span><div><div class="info-label">Address</div><div class="info-value">6200 Finch Ave W #5, Etobicoke</div></div></div>
+      <div class="info-item"><span class="info-icon">🕐</span><div><div class="info-label">Hours</div><div class="info-value open">10:00 — 19:00 (Closed Sun)</div></div></div>
+      <div class="update-badge"><span class="update-dot"></span>Live updates via SMS</div>
+    </div>
+  </div>
+  <div class="notice-bar">
+    <div class="container">
+      <span class="notice-icon">📋</span>
+      <span><strong>Today's Banchan:</strong> Japchae / Spinach Namul / Egg Roll / Fish Cake Stir-fry / Kkakdugi — closes early when sold out</span>
+    </div>
+  </div>
+  <section id="banchan-menu" class="menu-section fade-in">
+    <div class="container">
+      <p class="section-tag">Today's Menu</p>
+      <h2 style="font-family:'Noto Serif KR',serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:900;margin-bottom:2.5rem;">Pricing</h2>
+      <div class="menu-category">
+        <div class="menu-category-title">🍱 Banchan (Sm/Med/Lg)</div>
+        <div class="menu-grid">
+          <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Japchae</div><div class="menu-item-desc">Glass noodles, veg, beef</div><span class="menu-item-tag popular">Popular</span></div><div class="menu-item-price">$8/$14/$22</div></div>
+          <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Namul (Seasoned Greens)</div><div class="menu-item-desc">Spinach, bean sprouts, fernbrake</div></div><div class="menu-item-price">$5/$9/$15</div></div>
+          <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Kimchi</div><div class="menu-item-desc">Napa, radish, green onion</div><span class="menu-item-tag popular">Popular</span></div><div class="menu-item-price">$6/$11/$18</div></div>
+          <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">5-Side Lunchbox</div><div class="menu-item-desc">5 today's sides + steamed rice</div></div><div class="menu-item-price">$16</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="contact-section fade-in">
+    <div class="container">
+      <h2>Check Today's Stock</h2>
+      <p>Text us for today's available items or to reserve ahead.</p>
+      <div class="contact-btns">
+        <a href="#" class="btn-kakao">💬 Text Us</a>
+        <a href="tel:4165550633" class="btn-phone">📞 Call Us</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════ -->
+<!-- 💊 Pharmacy -->
+<!-- ══════════════════════════════════ -->
+<div id="page-pharmacy" class="biz-page">
+  <div class="hero">
+    <div class="hero-bg"><div class="hero-pattern"></div>
+      <div class="hero-orb hero-orb-1" style="background:rgba(42,92,69,0.1)"></div>
+    </div>
+    <div class="container hero-content">
+      <div class="hero-eyebrow">💊 Korean Pharmacy</div>
+      <h1 class="hero-title">Korean-speaking staff<br>for <span class="accent">prescriptions &amp; consultations</span></h1>
+      <p class="hero-sub">Korean-speaking pharmacist on-site. Korean health supplements and remedies available.</p>
+      <a href="#pharmacy-info" class="hero-cta">🕐 Hours</a>
+    </div>
+  </div>
+  <div class="info-strip">
+    <div class="container">
+      <div class="info-item"><span class="info-icon">📍</span><div><div class="info-label">Address</div><div class="info-value">5330 Yonge St, North York</div></div></div>
+      <div class="info-item"><span class="info-icon">🕐</span><div><div class="info-label">Today</div><div class="info-value open">09:00 — 19:00</div></div></div>
+      <div class="update-badge"><span class="update-dot"></span>Live updates via SMS</div>
+    </div>
+  </div>
+  <div id="pharmacy-info" class="map-section fade-in">
+    <div class="container">
+      <p class="section-tag">Hours</p>
+      <h2 style="font-family:'Noto Serif KR',serif;font-weight:900;">Business Hours</h2>
+      <div class="hours-grid" style="margin-top:2rem;">
+        <div class="hour-row"><span class="hour-day">Mon–Fri</span><span class="hour-time">09:00 — 19:00</span></div>
+        <div class="hour-row"><span class="hour-day">Sat</span><span class="hour-time">10:00 — 17:00</span></div>
+        <div class="hour-row"><span class="hour-day">Sun &amp; Holidays</span><span class="hour-time closed-day">Closed</span></div>
+      </div>
+      <div class="map-mock" style="margin-top:2rem;">
+        <div class="map-pin"><div class="map-pin-dot"></div><div class="map-address">📍 5330 Yonge St, North York</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="contact-section fade-in">
+    <div class="container">
+      <h2>Prescription Inquiries</h2>
+      <p>Text us a photo of your prescription and we'll have it ready for you.</p>
+      <div class="contact-btns">
+        <a href="#" class="btn-kakao">💬 Text Us</a>
+        <a href="tel:4165550710" class="btn-phone">📞 Call Us</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════ -->
+<!-- 👓 Optical Store -->
+<!-- ══════════════════════════════════ -->
+<div id="page-optical" class="biz-page">
+  <div class="hero">
+    <div class="hero-bg"><div class="hero-pattern"></div>
+      <div class="hero-orb hero-orb-1" style="background:rgba(184,148,63,0.1)"></div>
+    </div>
+    <div class="container hero-content">
+      <div class="hero-eyebrow">👓 Optical Store</div>
+      <h1 class="hero-title">Glasses that fit<br><span class="accent">perfectly</span></h1>
+      <p class="hero-sub">Free eye exam. 500+ frames including Korean brands. Same-day service available.</p>
+      <a href="#optical-menu" class="hero-cta">💰 Pricing</a>
+    </div>
+  </div>
+  <div class="info-strip">
+    <div class="container">
+      <div class="info-item"><span class="info-icon">📍</span><div><div class="info-label">Address</div><div class="info-value">5900 Yonge St #108, North York</div></div></div>
+      <div class="info-item"><span class="info-icon">🕐</span><div><div class="info-label">Hours</div><div class="info-value open">10:00 — 19:00 (Sun 12–17)</div></div></div>
+      <div class="update-badge"><span class="update-dot"></span>Live updates via SMS</div>
+    </div>
+  </div>
+  <section id="optical-menu" class="menu-section fade-in">
+    <div class="container">
+      <p class="section-tag">Pricing</p>
+      <h2 style="font-family:'Noto Serif KR',serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:900;margin-bottom:2.5rem;">Pricing</h2>
+      <div class="menu-category">
+        <div class="menu-category-title">👓 Eyeglasses</div>
+        <div class="menu-grid">
+          <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Basic Glasses Package</div><div class="menu-item-desc">Frame + lenses, free eye exam</div><span class="menu-item-tag popular">Popular</span></div><div class="menu-item-price">$99~</div></div>
+          <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Blue Light Blocking</div><div class="menu-item-desc">Frame + functional lenses</div></div><div class="menu-item-price">$149~</div></div>
+          <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">High-Index Lenses</div><div class="menu-item-desc">Recommended for strong prescriptions</div></div><div class="menu-item-price">$199~</div></div>
+        </div>
+      </div>
+      <div class="menu-category">
+        <div class="menu-category-title">🔵 Contact Lenses</div>
+        <div class="menu-grid">
+          <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Daily Disposables (30pk)</div><div class="menu-item-desc">Acuvue · Dailies</div><span class="menu-item-tag popular">Popular</span></div><div class="menu-item-price">$45~</div></div>
+          <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Korean Color Lenses</div><div class="menu-item-desc">1 week after order</div></div><div class="menu-item-price">$35~/box</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="contact-section fade-in">
+    <div class="container">
+      <h2>Lens Orders &amp; Stock Inquiries</h2>
+      <p>Text us your prescription and we'll send you a quote first.</p>
+      <div class="contact-btns">
+        <a href="#" class="btn-kakao">💬 Text Us</a>
+        <a href="tel:4165550822" class="btn-phone">📞 Call Us</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════ -->
+<!-- SMS update system -->
+<!-- ══════════════════════════════════ -->
+<div class="kakao-demo">
+  <div class="container">
+    <div class="kakao-explain">
+      <p class="section-tag" style="color:var(--gold)">How It Works</p>
+      <h3>Text your update,<br>your site updates instantly</h3>
+      <p>No admin panel. No login required.<br>Just send one text message — done.</p>
+      <div class="kakao-examples">
+        <div class="kakao-example-msg">
+          "Closed this Saturday"
+          <span class="msg-arrow">→</span>
+          <span class="msg-result">Hours updated automatically</span>
+        </div>
+        <div class="kakao-example-msg">
+          "Today's lunch special: Doenjang Jjigae $14.99"
+          <span class="msg-arrow">→</span>
+          <span class="msg-result">Notice banner updated automatically</span>
+        </div>
+        <div class="kakao-example-msg">
+          "New address: 5521 → 5600 Yonge"
+          <span class="msg-arrow">→</span>
+          <span class="msg-result">Address &amp; map updated automatically</span>
+        </div>
+        <div class="kakao-example-msg">
+          "Update Samgyeopsal price from 28 to 30"
+          <span class="msg-arrow">→</span>
+          <span class="msg-result">Menu price updated automatically</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="kakao-phone">
+        <div class="phone-header">
+          <div class="phone-title">
+            <span class="kakao-yellow">K</span>
+            My Business Channel
+          </div>
+        </div>
+        <div class="chat-bot-name">Wicner Bot</div>
+        <div class="chat-bubble chat-bot">Hello! 😊<br>Ready to update your site anytime!</div>
+        <div class="chat-bubble chat-owner">Closed this Saturday</div>
+        <div class="chat-bubble chat-bot">Got it! ✅<br>Updated your site: <strong>Closed Sat May 24</strong>.<br>Let me know when you reopen!</div>
+        <div class="chat-time">2:34 PM</div>
+        <div style="margin-top:0.75rem;">
+          <div class="chat-bubble chat-owner">Update Samgyeopsal to $30</div>
+          <div class="chat-bubble chat-bot">Done! Samgyeopsal updated <strong>$28 → $30</strong> ✅</div>
+          <div class="chat-time">3:12 PM</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Wicner tag -->
+<div class="vexmp-tag">
+  This site is built with <a href="#">Wicner</a> — AI Agent for Small Business
+</div>
+
+<script>
+function showBiz(id) {
+  // page switch
+  document.querySelectorAll('.biz-page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+
+  // button active
+  document.querySelectorAll('.biz-btn').forEach(b => b.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+
+  // scroll to top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // re-run fade-in
+  setTimeout(() => {
+    document.querySelectorAll('#page-' + id + ' .fade-in').forEach(el => {
+      el.classList.remove('visible');
+      void el.offsetWidth;
+    });
+    observeFadeIn();
+  }, 100);
+}
+
+function observeFadeIn() {
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-in:not(.visible)').forEach(el => obs.observe(el));
+}
+
+observeFadeIn();
+</script>
+</body>
+</html>

@@ -1,0 +1,1672 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Homepage Sample — Powered by Wicner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700;900&family=Noto+Sans+KR:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #faf7f2;
+  --warm-white: #f5f0e8;
+  --ink: #1c1a17;
+  --gold: #b8943f;
+  --gold-light: #e8d5a3;
+  --gold-pale: #f7f0dc;
+  --green: #2a5c45;
+  --green-light: #e8f2ec;
+  --red: #c0392b;
+  --muted: #7a7060;
+  --border: rgba(184,148,63,0.2);
+  --shadow: 0 4px 32px rgba(28,26,23,0.08);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 300;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ── DEMO BANNER ── */
+.demo-banner {
+  background: var(--ink);
+  color: var(--gold-light);
+  text-align: center;
+  padding: 0.6rem 1rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+}
+.demo-banner strong { color: #fff; }
+
+/* ── SELECTOR ── */
+.selector-bar {
+  background: var(--warm-white);
+  border-bottom: 1px solid var(--border);
+  padding: 0;
+  position: sticky;
+  top: 33px;
+  z-index: 100;
+}
+.selector-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: stretch;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.selector-inner::-webkit-scrollbar { display: none; }
+
+.category-group {
+  display: flex;
+  align-items: center;
+  border-right: 1px solid var(--border);
+  padding: 0 0.5rem;
+}
+.category-group:last-child { border-right: none; }
+
+.cat-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 0 0.75rem;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.biz-btn {
+  background: none;
+  border: none;
+  padding: 1rem 1.1rem;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.biz-btn:hover { color: var(--ink); }
+.biz-btn.active {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+  font-weight: 500;
+}
+.biz-btn .icon { font-size: 1rem; }
+
+/* ── PAGES ── */
+.biz-page { display: none; }
+.biz-page.active { display: block; }
+
+/* ── COMMON SECTIONS ── */
+section { padding: 5rem 1.5rem; }
+.container { max-width: 900px; margin: 0 auto; }
+.section-tag {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: 6rem 1.5rem 4rem;
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.hero-pattern {
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 40px, var(--ink) 40px, var(--ink) 41px),
+    repeating-linear-gradient(90deg, transparent, transparent 40px, var(--ink) 40px, var(--ink) 41px);
+}
+.hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+}
+.hero-orb-1 { width:500px; height:500px; background:rgba(184,148,63,0.1); top:-100px; right:-100px; }
+.hero-orb-2 { width:300px; height:300px; background:rgba(42,92,69,0.08); bottom:-50px; left:-50px; }
+
+.hero-content { position: relative; z-index: 1; max-width: 700px; }
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--gold-pale);
+  border: 1px solid var(--gold-light);
+  padding: 0.4rem 1rem;
+  border-radius: 2rem;
+  font-size: 0.75rem;
+  color: var(--gold);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  margin-bottom: 2rem;
+}
+.hero-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: clamp(2rem, 6vw, 3.8rem);
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  margin-bottom: 1.5rem;
+}
+.hero-title .accent {
+  color: var(--gold);
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 400;
+}
+.hero-sub {
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  color: #5a5040;
+  line-height: 1.9;
+  max-width: 540px;
+  margin-bottom: 2.5rem;
+}
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--ink);
+  color: var(--cream);
+  padding: 0.9rem 1.8rem;
+  border-radius: 0.25rem;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background 0.2s, transform 0.2s;
+}
+.hero-cta:hover { background: var(--green); transform: translateY(-1px); }
+.hero-cta-2 {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--muted);
+  padding: 0.9rem 1.2rem;
+  font-size: 0.88rem;
+  text-decoration: none;
+  transition: color 0.2s;
+  margin-left: 0.5rem;
+}
+.hero-cta-2:hover { color: var(--ink); }
+
+/* ── INFO STRIP ── */
+.info-strip {
+  background: var(--ink);
+  color: var(--cream);
+  padding: 1.5rem;
+}
+.info-strip .container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  align-items: center;
+  justify-content: space-between;
+}
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.88rem;
+}
+.info-icon { font-size: 1.2rem; }
+.info-label { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: #7a7060; margin-bottom: 0.1rem; }
+.info-value { color: var(--cream); font-weight: 400; }
+.info-value.open { color: #6ec99a; font-weight: 500; }
+.info-value.closed { color: #e88080; font-weight: 500; }
+
+.update-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(184,148,63,0.15);
+  border: 1px solid rgba(184,148,63,0.3);
+  color: var(--gold-light);
+  font-size: 0.7rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 2rem;
+  letter-spacing: 0.05em;
+}
+.update-dot { width:6px; height:6px; background:var(--gold); border-radius:50%; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+/* ── NOTICE ── */
+.notice-bar {
+  background: var(--gold-pale);
+  border-top: 1px solid var(--gold-light);
+  border-bottom: 1px solid var(--gold-light);
+  padding: 0.9rem 1.5rem;
+}
+.notice-bar .container {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.88rem;
+  color: #5a4a20;
+}
+.notice-icon { font-size: 1rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+/* ── MAP ── */
+.map-section { background: var(--warm-white); padding: 4rem 1.5rem; }
+.map-mock {
+  background: #e8e4dc;
+  border-radius: 0.5rem;
+  height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  margin-top: 2rem;
+}
+.map-mock::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(0deg, transparent, transparent 30px, rgba(0,0,0,0.04) 30px, rgba(0,0,0,0.04) 31px),
+    repeating-linear-gradient(90deg, transparent, transparent 30px, rgba(0,0,0,0.04) 30px, rgba(0,0,0,0.04) 31px);
+}
+.map-pin {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+.map-pin-dot {
+  width: 40px; height: 40px;
+  background: var(--red);
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  margin: 0 auto 0.5rem;
+  box-shadow: 0 4px 12px rgba(192,57,43,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.map-pin-dot::after {
+  content: '';
+  width: 14px; height: 14px;
+  background: #fff;
+  border-radius: 50%;
+  transform: rotate(45deg);
+}
+.map-address {
+  background: #fff;
+  padding: 0.6rem 1.25rem;
+  border-radius: 0.5rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+  color: var(--ink);
+}
+
+.hours-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+.hour-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 1rem;
+  background: #fff;
+  border-radius: 0.4rem;
+  font-size: 0.85rem;
+  border: 1px solid var(--border);
+}
+.hour-day { color: var(--muted); }
+.hour-time { font-weight: 500; }
+.hour-time.today { color: var(--green); font-weight: 700; }
+.hour-time.closed-day { color: #ccc; }
+
+/* ── MENU / PRICING ── */
+.menu-section { background: var(--cream); }
+.menu-category {
+  margin-bottom: 3rem;
+}
+.menu-category-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ink);
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+.menu-item {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.menu-item:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+.menu-item-info { flex: 1; }
+.menu-item-name {
+  font-weight: 500;
+  font-size: 0.92rem;
+  margin-bottom: 0.3rem;
+  color: var(--ink);
+}
+.menu-item-desc {
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.menu-item-tag {
+  display: inline-block;
+  font-size: 0.65rem;
+  background: var(--green-light);
+  color: var(--green);
+  padding: 0.15rem 0.5rem;
+  border-radius: 1rem;
+  margin-top: 0.4rem;
+  font-weight: 500;
+}
+.menu-item-tag.popular { background: var(--gold-pale); color: var(--gold); }
+.menu-item-price {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-left: 1rem;
+  white-space: nowrap;
+}
+
+/* ── BOOKING FORM ── */
+.booking-section { background: var(--warm-white); }
+.booking-form {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 2.5rem;
+  margin-top: 2rem;
+  max-width: 600px;
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.form-group { margin-bottom: 1rem; }
+.form-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  margin-bottom: 0.4rem;
+  text-transform: uppercase;
+}
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 0.35rem;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 0.88rem;
+  color: var(--ink);
+  background: var(--cream);
+  transition: border-color 0.2s;
+  outline: none;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color: var(--gold);
+}
+.form-textarea { height: 100px; resize: vertical; }
+.form-submit {
+  background: var(--ink);
+  color: var(--cream);
+  border: none;
+  padding: 0.9rem 2rem;
+  border-radius: 0.35rem;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+.form-submit:hover { background: var(--green); transform: translateY(-1px); }
+
+/* ── KAKAO UPDATE DEMO ── */
+.kakao-demo {
+  background: var(--ink);
+  color: var(--cream);
+  padding: 4rem 1.5rem;
+}
+.kakao-demo .container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+@media (max-width: 700px) { .kakao-demo .container { grid-template-columns: 1fr; gap: 2rem; } }
+
+.kakao-explain h3 {
+  font-family: 'Noto Serif KR', serif;
+  font-size: clamp(1.3rem, 3vw, 1.9rem);
+  font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: 1.25rem;
+}
+.kakao-explain p {
+  color: #a09880;
+  font-size: 0.9rem;
+  line-height: 1.9;
+  margin-bottom: 1rem;
+}
+.kakao-examples {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+.kakao-example-msg {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.82rem;
+  color: #d0c8b8;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.msg-arrow { color: var(--gold); font-size: 0.9rem; }
+.msg-result { color: #6ec99a; font-size: 0.78rem; }
+
+.kakao-phone {
+  background: #fff;
+  border-radius: 2rem;
+  padding: 1.5rem 1rem;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  max-width: 280px;
+  margin: 0 auto;
+}
+.phone-header {
+  text-align: center;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 1rem;
+}
+.phone-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #3C1E1E;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+}
+.kakao-yellow { color: #856404; background: #FEE500; width:24px;height:24px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:900; }
+.chat-bubble {
+  padding: 0.6rem 0.9rem;
+  border-radius: 0.75rem;
+  font-size: 0.78rem;
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+  max-width: 85%;
+  color: #1c1a17;
+}
+.chat-owner {
+  background: #FEE500;
+  margin-left: auto;
+  border-radius: 0.75rem 0 0.75rem 0.75rem;
+}
+.chat-bot {
+  background: #f2f2f2;
+  border-radius: 0 0.75rem 0.75rem 0.75rem;
+}
+.chat-bot-name {
+  font-size: 0.65rem;
+  color: #888;
+  margin-bottom: 0.3rem;
+}
+.chat-time { font-size: 0.6rem; color: #bbb; text-align: right; margin-top: 0.2rem; }
+
+/* ── FOOTER / CONTACT ── */
+.contact-section {
+  background: var(--warm-white);
+  padding: 4rem 1.5rem;
+  text-align: center;
+  border-top: 1px solid var(--border);
+}
+.contact-section h2 {
+  font-family: 'Noto Serif KR', serif;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 900;
+  margin-bottom: 0.75rem;
+}
+.contact-section p {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-bottom: 2rem;
+}
+.contact-btns {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.btn-kakao {
+  background: #FEE500;
+  color: #3C1E1E;
+  padding: 0.85rem 1.75rem;
+  border-radius: 0.35rem;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.88rem;
+  display: flex; align-items: center; gap: 0.5rem;
+  transition: transform 0.2s;
+}
+.btn-kakao:hover { transform: translateY(-1px); }
+.btn-phone {
+  background: var(--green);
+  color: #fff;
+  padding: 0.85rem 1.75rem;
+  border-radius: 0.35rem;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.88rem;
+  display: flex; align-items: center; gap: 0.5rem;
+  transition: transform 0.2s;
+}
+.btn-phone:hover { transform: translateY(-1px); }
+
+/* ── VEXMP TAG ── */
+.vexmp-tag {
+  text-align: center;
+  padding: 1.25rem;
+  background: var(--ink);
+  color: #484030;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+}
+.vexmp-tag a { color: var(--gold); text-decoration: none; opacity: 0.7; }
+.vexmp-tag a:hover { opacity: 1; }
+
+/* ── SPECIALS ── */
+.specials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.special-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  text-align: center;
+  transition: transform 0.2s;
+}
+.special-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+.special-emoji { font-size: 2rem; margin-bottom: 0.75rem; }
+.special-name { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.4rem; }
+.special-price {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--gold);
+}
+.special-unit { font-size: 0.72rem; color: var(--muted); }
+.special-badge {
+  display: inline-block;
+  background: var(--red);
+  color: #fff;
+  font-size: 0.65rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 1rem;
+  margin-top: 0.5rem;
+  font-weight: 500;
+}
+
+@media (max-width: 640px) {
+  .form-row { grid-template-columns: 1fr; }
+  .info-strip .container { flex-direction: column; gap: 1rem; }
+}
+
+/* ── FADE IN ── */
+.fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s; }
+.fade-in.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<!-- 데모 배너 -->
+<div class="demo-banner">
+  <strong>샘플</strong> — 이 샘플 사이트는 Wicner — AI Agent for Small Business 로 제작되었습니다
+</div>
+
+<!-- 업종 선택 바 -->
+<nav class="selector-bar">
+  <div class="selector-inner">
+
+    <div class="category-group">
+      <span class="cat-label">📅 예약형</span>
+      <button class="biz-btn active" onclick="showBiz('salon')">
+        <span class="icon">✂️</span> 미용실
+      </button>
+      <button class="biz-btn" onclick="showBiz('academy')">
+        <span class="icon">📚</span> 학원
+      </button>
+      <button class="biz-btn" onclick="showBiz('travel')">
+        <span class="icon">✈️</span> 여행사
+      </button>
+    </div>
+
+    <div class="category-group">
+      <span class="cat-label">🍽️ 메뉴형</span>
+      <button class="biz-btn" onclick="showBiz('restaurant')">
+        <span class="icon">🍜</span> 식당
+      </button>
+      <button class="biz-btn" onclick="showBiz('banchan')">
+        <span class="icon">🥗</span> 반찬가게
+      </button>
+    </div>
+
+    <div class="category-group">
+      <span class="cat-label">ℹ️ 정보형</span>
+      <button class="biz-btn" onclick="showBiz('karaoke')">
+        <span class="icon">🎤</span> 코인노래방
+      </button>
+      <button class="biz-btn" onclick="showBiz('pharmacy')">
+        <span class="icon">💊</span> 약국
+      </button>
+      <button class="biz-btn" onclick="showBiz('optical')">
+        <span class="icon">👓</span> 안경점
+      </button>
+    </div>
+
+  </div>
+</nav>
+
+
+<!-- ══════════════════════════════════ -->
+<!-- ✂️ 미용실 -->
+<!-- ══════════════════════════════════ -->
+<div id="page-salon" class="biz-page active">
+
+  <div class="hero">
+    <div class="hero-bg">
+      <div class="hero-pattern"></div>
+      <div class="hero-orb hero-orb-1"></div>
+      <div class="hero-orb hero-orb-2"></div>
+    </div>
+    <div class="container hero-content">
+      <div class="hero-eyebrow">✂️ 미용실 · 네일샵</div>
+      <h1 class="hero-title">
+        머리카락 한 올까지<br><span class="accent">정성</span>으로 다듬습니다
+      </h1>
+      <p class="hero-sub">
+        핀치 스트리트에서 12년째 자리를 지키고 있습니다.<br>
+        단골 손님 한 분 한 분의 스타일을 기억하는 곳.
+      </p>
+      <a href="#salon-booking" class="hero-cta">💬 예약하기</a>
+      <a href="#salon-menu" class="hero-cta-2">서비스 보기 →</a>
+    </div>
+  </div>
+
+  <div class="info-strip">
+    <div class="container">
+      <div class="info-item">
+        <span class="info-icon">📍</span>
+        <div>
+          <div class="info-label">주소</div>
+          <div class="info-value">5521 Yonge St, North York, ON</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <span class="info-icon">🕐</span>
+        <div>
+          <div class="info-label">오늘 영업시간</div>
+          <div class="info-value open">10:00 — 20:00 영업 중</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <span class="info-icon">📞</span>
+        <div>
+          <div class="info-label">전화</div>
+          <div class="info-value">(416) 555-0182</div>
+        </div>
+      </div>
+      <div class="update-badge">
+        <span class="update-dot"></span>
+        카카오로 실시간 업데이트
+      </div>
+    </div>
+  </div>
+
+  <div class="notice-bar">
+    <div class="container">
+      <span class="notice-icon">📢</span>
+      <span><strong>공지:</strong> 5월 20일(화) 어버이날 연휴로 휴무입니다. 그 외 연휴 영업 여부는 카카오 채널에서 확인해 주세요.</span>
+    </div>
+  </div>
+
+  <section id="salon-menu" class="menu-section fade-in">
+    <div class="container">
+      <p class="section-tag">Services & Pricing</p>
+      <h2 style="font-family:'Noto Serif KR',serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:900;margin-bottom:0.5rem;">서비스 및 가격</h2>
+      <p style="color:var(--muted);font-size:0.88rem;margin-bottom:2.5rem;">가격은 모발 길이·상태에 따라 달라질 수 있습니다. 방문 전 카카오로 문의해 주세요.</p>
+
+      <div class="menu-category">
+        <div class="menu-category-title">✂️ 커트</div>
+        <div class="menu-grid">
+          <div class="menu-item">
+            <div class="menu-item-info">
+              <div class="menu-item-name">일반 커트</div>
+              <div class="menu-item-desc">샴푸 포함</div>
+              <span class="menu-item-tag popular">인기</span>
+            </div>
+            <div class="menu-item-price">$35+</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-info">
+              <div class="menu-item-name">레이어드 커트</div>
+              <div class="menu-item-desc">볼륨·흐름 연출</div>
+            </div>
+            <div class="menu-item-price">$50+</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-info">
+              <div class="menu-item-name">남성 커트</div>
+              <div class="menu-item-desc">샴푸 + 스타일링</div>
+              <span class="menu-item-tag popular">인기</span>
+            </div>
+            <div class="menu-item-price">$28+</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-category">
+        <div class="menu-category-title">🎨 컬러</div>
+        <div class="menu-grid">
+          <div class="menu-item">
+            <div class="menu-item-info">
+              <div class="menu-item-name">전체 염색</div>
+              <div class="menu-item-desc">단색, 커트 별도</div>
+            </div>
+            <div class="menu-item-price">$80+</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-info">
+              <div class="menu-item-name">하이라이트</div>
+              <div class="menu-item-desc">부분 · 전체 선택</div>
+              <span class="menu-item-tag popular">인기</span>
+            </div>
+            <div class="menu-item-price">$120+</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-info">
+              <div class="menu-item-name">탈색</div>
+              <div class="menu-item-desc">모발 상태 상담 필수</div>
+            </div>
+            <div class="menu-item-price">$100+</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="salon-booking" class="booking-section fade-in">
+    <div class="container">
+      <p class="section-tag">Reservation</p>
+      <h2 style="font-family:'Noto Serif KR',serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:900;">예약하기</h2>
+      <div class="booking-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">이름</label>
+            <input type="text" class="form-input" placeholder="김민지">
+          </div>
+          <div class="form-group">
+            <label class="form-label">연락처</label>
+            <input type="text" class="form-input" placeholder="(416) 000-0000">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">희망 날짜</label>
+            <input type="date" class="form-input">
+          </div>
+          <div class="form-group">
+            <label class="form-label">희망 시간</label>
+            <select class="form-select">
+              <option>10:00</option><option>11:00</option><option>12:00</option>
+              <option>13:00</option><option>14:00</option><option>15:00</option>
+              <option>16:00</option><option>17:00</option><option>18:00</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">서비스</label>
+          <select class="form-select">
+            <option>일반 커트</option><option>레이어드 커트</option>
+            <option>남성 커트</option><option>전체 염색</option>
+            <option>하이라이트</option><option>기타 (메모에 작성)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">요청사항</label>
+          <textarea class="form-textarea" placeholder="원하시는 스타일이나 참고 이미지 링크를 적어주세요."></textarea>
+        </div>
+        <button class="form-submit">예약 요청 보내기</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="map-section fade-in">
+    <div class="container">
+      <p class="section-tag">Location</p>
+      <h2 style="font-family:'Noto Serif KR',serif;font-weight:900;">오시는 길</h2>
+      <div class="map-mock">
+        <div class="map-pin">
+          <div class="map-pin-dot"></div>
+          <div class="map-address">📍 5521 Yonge St, North York</div>
+        </div>
+      </div>
+      <div class="hours-grid" style="margin-top:2rem;">
+        <div class="hour-row"><span class="hour-day">월</span><span class="hour-time">10:00 — 20:00</span></div>
+        <div class="hour-row"><span class="hour-day">화</span><span class="hour-time today">10:00 — 20:00 ◀ 오늘</span></div>
+        <div class="hour-row"><span class="hour-day">수</span><span class="hour-time">10:00 — 20:00</span></div>
+        <div class="hour-row"><span class="hour-day">목</span><span class="hour-time">10:00 — 20:00</span></div>
+        <div class="hour-row"><span class="hour-day">금</span><span class="hour-time">10:00 — 21:00</span></div>
+        <div class="hour-row"><span class="hour-day">토</span><span class="hour-time">9:00 — 19:00</span></div>
+        <div class="hour-row"><span class="hour-day">일</span><span class="hour-time closed-day">휴무</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-section fade-in">
+    <div class="container">
+      <h2>편하게 연락 주세요</h2>
+      <p>예약 변경, 가격 문의, 스타일 상담 — 카카오로 편하게 보내주시면 됩니다.</p>
+      <div class="contact-btns">
+        <a href="#" class="btn-kakao">💬 카카오로 문의</a>
+        <a href="tel:4165550182" class="btn-phone">📞 전화하기</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════ -->
+<!-- 🍜 식당 -->
+<!-- ══════════════════════════════════ -->
+<div id="page-restaurant" class="biz-page">
+
+  <div class="hero">
+    <div class="hero-bg">
+      <div class="hero-pattern"></div>
+      <div class="hero-orb hero-orb-1" style="background:rgba(42,92,69,0.1)"></div>
+      <div class="hero-orb hero-orb-2" style="background:rgba(184,148,63,0.08)"></div>
+    </div>
+    <div class="container hero-content">
+      <div class="hero-eyebrow">🍜 한식당</div>
+      <h1 class="hero-title">
+        어머니 손맛 그대로<br><span class="accent">정직한 한 끼</span>
+      </h1>
+      <p class="hero-sub">
+        토론토에서 15년, 변하지 않은 국물 맛.<br>
+        오늘도 아침부터 직접 육수를 냅니다.
+      </p>
+      <a href="#restaurant-menu" class="hero-cta">🍽️ 메뉴 보기</a>
+    </div>
+  </div>
+
+  <div class="info-strip">
+    <div class="container">
+      <div class="info-item">
+        <span class="info-icon">📍</span>
+        <div>
+          <div class="info-label">주소</div>
+          <div class="info-value">6380 Yonge St, North York, ON</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <span class="info-icon">🕐</span>
+        <div>
+          <div class="info-label">점심 / 저녁</div>
+          <div class="info-value open">11:30—15:00 / 17:00—21:30</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <span class="info-icon">🚗</span>
+        <div>
+          <div class="info-label">주차</div>
+          <div class="info-value">건물 뒤 무료 10대</div>
+        </div>
+      </div>
+      <div class="update-badge">
+        <span class="update-dot"></span>
+        카카오로 실시간 업데이트
+      </div>
+    </div>
+  </div>
+
+  <div class="notice-bar">
+    <div class="container">
+      <span class="notice-icon">🍱</span>
+      <span><strong>오늘의 특선:</strong> 된장찌개 + 공기밥 + 반찬 3종 — 런치 스페셜 <strong>$14.99</strong> (평일 11:30~14:00)</span>
+    </div>
+  </div>
+
+  <section id="restaurant-menu" class="menu-section fade-in">
+    <div class="container">
+      <p class="section-tag">Menu & Pricing</p>
+      <h2 style="font-family:'Noto Serif KR',serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:900;margin-bottom:2.5rem;">메뉴</h2>
+
+      <div class="menu-category">
+        <div class="menu-category-title">🍲 찌개·국밥</div>
+        <div class="menu-grid">
+          <div class="menu-item">
+            <div class="menu-item-info">
+              <div class="menu-item-name">순두부찌개</div>
+              <div class="menu-item-desc">공기밥 포함</div>
+              <span class="menu-item-tag popular">베스트</span>
+            </div>
+            <div class="menu-item-price">$17</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-info">
+              <div class="menu-item-name">된장찌개</div>
+              <div class="menu-item-desc">공기밥 포함</div>
+            </div>
+            <div class="menu-item-price">$16</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-info">
+              <div class="menu-item-name">설렁탕</div>
+              <div class="menu-item-desc">12시간 우린 사골 국물</div>
+              <span class="menu-item-tag popular">베스트</span>
+            </div>
+            <div class="menu-item-price">$19</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-info">
+              <div class="menu-item-name">부대찌개</div>
+              <div class="menu-item-desc">2인 이상 / 인당</div>
+            </div>
+            <div class="menu-item-price">$18/인</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-category">
+        <div class="menu-category-title">🥩 구이류</div>
+        <div class="menu-grid">
+          <div class="menu-item">
+            <div class="menu-item-info">
+              <div class="menu-item-name">삼겹살</div>
+              <div class="menu-item-desc">200g · 쌈채소 포함</div>
+              <span class="menu-item-tag popular">인기</span>
+            </div>
+            <div class="menu-item-price">$28</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-info">
+              <div class="menu-item-name">불고기</div>
+              <div class="menu-item-desc">200g · 공기밥 별도</div>
+            </div>
+            <div class="menu-item-price">$26</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="map-section fade-in">
+    <div class="container">
+      <p class="section-tag">Location</p>
+      <h2 style="font-family:'Noto Serif KR',serif;font-weight:900;">오시는 길</h2>
+      <div class="map-mock">
+        <div class="map-pin">
+          <div class="map-pin-dot"></div>
+          <div class="map-address">📍 6380 Yonge St, North York</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-section fade-in">
+    <div class="container">
+      <h2>단체 예약 문의</h2>
+      <p>10인 이상 단체 예약은 카카오로 미리 연락 주세요.</p>
+      <div class="contact-btns">
+        <a href="#" class="btn-kakao">💬 카카오로 문의</a>
+        <a href="tel:4165550299" class="btn-phone">📞 전화하기</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════ -->
+<!-- 🎤 코인노래방 -->
+<!-- ══════════════════════════════════ -->
+<div id="page-karaoke" class="biz-page">
+
+  <div class="hero">
+    <div class="hero-bg">
+      <div class="hero-pattern"></div>
+      <div class="hero-orb hero-orb-1" style="background:rgba(184,148,63,0.12)"></div>
+      <div class="hero-orb hero-orb-2" style="background:rgba(192,57,43,0.06)"></div>
+    </div>
+    <div class="container hero-content">
+      <div class="hero-eyebrow">🎤 코인노래방</div>
+      <h1 class="hero-title">
+        동전 하나로<br><span class="accent">한 곡의 해방</span>
+      </h1>
+      <p class="hero-sub">
+        셰퍼드 애비뉴 가장 깨끗한 코인노래방.<br>
+        최신 한국 노래 매주 업데이트, 혼자여도 괜찮습니다.
+      </p>
+      <a href="#karaoke-info" class="hero-cta">💰 이용 안내</a>
+    </div>
+  </div>
+
+  <div class="info-strip">
+    <div class="container">
+      <div class="info-item">
+        <span class="info-icon">📍</span>
+        <div>
+          <div class="info-label">주소</div>
+          <div class="info-value">4880 Sheppard Ave E, Scarborough</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <span class="info-icon">🕐</span>
+        <div>
+          <div class="info-label">영업시간</div>
+          <div class="info-value open">12:00 — 24:00 매일</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <span class="info-icon">🚇</span>
+        <div>
+          <div class="info-label">대중교통</div>
+          <div class="info-value">Sheppard-Yonge역 버스 5분</div>
+        </div>
+      </div>
+      <div class="update-badge">
+        <span class="update-dot"></span>
+        카카오로 실시간 업데이트
+      </div>
+    </div>
+  </div>
+
+  <div class="notice-bar">
+    <div class="container">
+      <span class="notice-icon">🎉</span>
+      <span><strong>이벤트:</strong> 평일 오후 12~5시 해피아워 — 코인 20% 추가 지급! 5월 말까지.</span>
+    </div>
+  </div>
+
+  <section id="karaoke-info" style="background:var(--cream); padding:5rem 1.5rem;" class="fade-in">
+    <div class="container">
+      <p class="section-tag">Pricing</p>
+      <h2 style="font-family:'Noto Serif KR',serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:900;margin-bottom:2.5rem;">이용 요금</h2>
+      <div class="specials-grid">
+        <div class="special-card">
+          <div class="special-emoji">🪙</div>
+          <div class="special-name">코인 1개</div>
+          <div class="special-price">$1</div>
+          <div class="special-unit">= 1곡</div>
+        </div>
+        <div class="special-card">
+          <div class="special-emoji">🎁</div>
+          <div class="special-name">코인 12개</div>
+          <div class="special-price">$10</div>
+          <div class="special-unit">보너스 2개 포함</div>
+          <span class="special-badge">BEST</span>
+        </div>
+        <div class="special-card">
+          <div class="special-emoji">🏆</div>
+          <div class="special-name">코인 30개</div>
+          <div class="special-price">$25</div>
+          <div class="special-unit">보너스 5개 포함</div>
+          <span class="special-badge">알뜰</span>
+        </div>
+        <div class="special-card">
+          <div class="special-emoji">⭐</div>
+          <div class="special-name">멤버십 월정액</div>
+          <div class="special-price">$39</div>
+          <div class="special-unit">코인 45개/월</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="map-section fade-in">
+    <div class="container">
+      <p class="section-tag">Location</p>
+      <h2 style="font-family:'Noto Serif KR',serif;font-weight:900;">오시는 길</h2>
+      <div class="map-mock">
+        <div class="map-pin">
+          <div class="map-pin-dot"></div>
+          <div class="map-address">📍 4880 Sheppard Ave E, Scarborough</div>
+        </div>
+      </div>
+      <div class="hours-grid">
+        <div class="hour-row"><span class="hour-day">월–금</span><span class="hour-time">12:00 — 24:00</span></div>
+        <div class="hour-row"><span class="hour-day">토·일</span><span class="hour-time">11:00 — 01:00</span></div>
+        <div class="hour-row"><span class="hour-day">공휴일</span><span class="hour-time">공지 확인</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-section fade-in">
+    <div class="container">
+      <h2>문의하기</h2>
+      <p>단체 이용·이벤트 예약은 카카오로 연락 주세요.</p>
+      <div class="contact-btns">
+        <a href="#" class="btn-kakao">💬 카카오로 문의</a>
+        <a href="tel:4165550341" class="btn-phone">📞 전화하기</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════ -->
+<!-- 📚 학원 -->
+<!-- ══════════════════════════════════ -->
+<div id="page-academy" class="biz-page">
+
+  <div class="hero">
+    <div class="hero-bg">
+      <div class="hero-pattern"></div>
+      <div class="hero-orb hero-orb-1" style="background:rgba(42,92,69,0.12)"></div>
+    </div>
+    <div class="container hero-content">
+      <div class="hero-eyebrow">📚 보습학원</div>
+      <h1 class="hero-title">
+        조용히 떠나기 전에<br><span class="accent">먼저 알려드립니다</span>
+      </h1>
+      <p class="hero-sub">
+        성적보다 먼저 아이의 변화를 부모님께 전달합니다.<br>
+        매월 리포트, 먼저 연락하는 선생님.
+      </p>
+      <a href="#academy-booking" class="hero-cta">📋 상담 신청</a>
+    </div>
+  </div>
+
+  <div class="info-strip">
+    <div class="container">
+      <div class="info-item">
+        <span class="info-icon">📍</span>
+        <div>
+          <div class="info-label">주소</div>
+          <div class="info-value">5765 Yonge St #202, North York</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <span class="info-icon">🕐</span>
+        <div>
+          <div class="info-label">수업 시간</div>
+          <div class="info-value open">월·수·금 15:30 — 20:00</div>
+        </div>
+      </div>
+      <div class="update-badge">
+        <span class="update-dot"></span>
+        카카오로 실시간 업데이트
+      </div>
+    </div>
+  </div>
+
+  <section class="menu-section fade-in">
+    <div class="container">
+      <p class="section-tag">Programs & Tuition</p>
+      <h2 style="font-family:'Noto Serif KR',serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:900;margin-bottom:2.5rem;">수업 과정 및 수강료</h2>
+      <div class="menu-category">
+        <div class="menu-category-title">📐 수학</div>
+        <div class="menu-grid">
+          <div class="menu-item">
+            <div class="menu-item-info">
+              <div class="menu-item-name">초등 수학 (G1–G6)</div>
+              <div class="menu-item-desc">주 2회 · 월 4~8회</div>
+              <span class="menu-item-tag popular">인기</span>
+            </div>
+            <div class="menu-item-price">$280/월</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-info">
+              <div class="menu-item-name">중등 수학 (G7–G9)</div>
+              <div class="menu-item-desc">주 2회 · 개념+심화</div>
+            </div>
+            <div class="menu-item-price">$320/월</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-info">
+              <div class="menu-item-name">고등 수학 (G10–G12)</div>
+              <div class="menu-item-desc">대입 대비 포함</div>
+              <span class="menu-item-tag popular">인기</span>
+            </div>
+            <div class="menu-item-price">$380/월</div>
+          </div>
+        </div>
+      </div>
+      <div class="menu-category">
+        <div class="menu-category-title">📝 영어·국어</div>
+        <div class="menu-grid">
+          <div class="menu-item">
+            <div class="menu-item-info">
+              <div class="menu-item-name">영어 독해·작문</div>
+              <div class="menu-item-desc">G4 이상</div>
+            </div>
+            <div class="menu-item-price">$300/월</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-info">
+              <div class="menu-item-name">한국어 (주말반)</div>
+              <div class="menu-item-desc">토 10:00–12:00</div>
+              <span class="menu-item-tag">주말</span>
+            </div>
+            <div class="menu-item-price">$180/월</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="academy-booking" class="booking-section fade-in">
+    <div class="container">
+      <p class="section-tag">Consultation</p>
+      <h2 style="font-family:'Noto Serif KR',serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:900;">무료 상담 신청</h2>
+      <div class="booking-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">학부모 성함</label>
+            <input type="text" class="form-input" placeholder="김영희">
+          </div>
+          <div class="form-group">
+            <label class="form-label">연락처</label>
+            <input type="text" class="form-input" placeholder="(416) 000-0000">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">자녀 학년</label>
+            <select class="form-select">
+              <option>G1</option><option>G2</option><option>G3</option>
+              <option>G4</option><option>G5</option><option>G6</option>
+              <option>G7</option><option>G8</option><option>G9</option>
+              <option>G10</option><option>G11</option><option>G12</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">관심 과목</label>
+            <select class="form-select">
+              <option>수학</option><option>영어</option>
+              <option>수학+영어</option><option>한국어</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">현재 고민</label>
+          <textarea class="form-textarea" placeholder="현재 성적이나 어려움을 간단히 적어주세요."></textarea>
+        </div>
+        <button class="form-submit">상담 신청하기</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="contact-section fade-in">
+    <div class="container">
+      <h2>궁금한 점이 있으시면</h2>
+      <p>수업 일정, 레벨 테스트, 수강료 문의 모두 카카오로 편하게 연락 주세요.</p>
+      <div class="contact-btns">
+        <a href="#" class="btn-kakao">💬 카카오로 문의</a>
+        <a href="tel:4165550412" class="btn-phone">📞 전화하기</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════ -->
+<!-- ✈️ 여행사 (간략) -->
+<!-- ══════════════════════════════════ -->
+<div id="page-travel" class="biz-page">
+  <div class="hero">
+    <div class="hero-bg"><div class="hero-pattern"></div>
+      <div class="hero-orb hero-orb-1" style="background:rgba(42,92,69,0.1)"></div>
+    </div>
+    <div class="container hero-content">
+      <div class="hero-eyebrow">✈️ 한인 여행사</div>
+      <h1 class="hero-title">한국어로 예약하고<br><span class="accent">편하게 떠나세요</span></h1>
+      <p class="hero-sub">토론토 출발 한국·동남아·유럽 패키지. 개인 맞춤 일정도 상담해드립니다.</p>
+      <a href="#travel-contact" class="hero-cta">✉️ 견적 문의</a>
+    </div>
+  </div>
+  <div class="info-strip">
+    <div class="container">
+      <div class="info-item"><span class="info-icon">📍</span><div><div class="info-label">주소</div><div class="info-value">5140 Yonge St #310, North York</div></div></div>
+      <div class="info-item"><span class="info-icon">🕐</span><div><div class="info-label">상담 시간</div><div class="info-value open">월–금 10:00–18:00</div></div></div>
+      <div class="update-badge"><span class="update-dot"></span>카카오로 실시간 업데이트</div>
+    </div>
+  </div>
+  <section class="menu-section fade-in">
+    <div class="container">
+      <p class="section-tag">Popular Packages</p>
+      <h2 style="font-family:'Noto Serif KR',serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:900;margin-bottom:2.5rem;">인기 패키지</h2>
+      <div class="specials-grid">
+        <div class="special-card"><div class="special-emoji">🇰🇷</div><div class="special-name">한국 왕복 패키지</div><div class="special-price">$1,299</div><div class="special-unit">7박 9일~</div><span class="special-badge">인기</span></div>
+        <div class="special-card"><div class="special-emoji">🇯🇵</div><div class="special-name">일본 오사카·도쿄</div><div class="special-price">$1,499</div><div class="special-unit">5박 7일~</div></div>
+        <div class="special-card"><div class="special-emoji">🌴</div><div class="special-name">베트남 다낭</div><div class="special-price">$1,199</div><div class="special-unit">4박 6일~</div><span class="special-badge">알뜰</span></div>
+        <div class="special-card"><div class="special-emoji">🏛️</div><div class="special-name">유럽 서부 9개국</div><div class="special-price">$3,499</div><div class="special-unit">11박 13일~</div></div>
+      </div>
+    </div>
+  </section>
+  <div id="travel-contact" class="contact-section fade-in">
+    <div class="container">
+      <h2>견적 문의</h2>
+      <p>출발일·인원·예산 알려주시면 맞춤 견적 바로 드립니다.</p>
+      <div class="contact-btns">
+        <a href="#" class="btn-kakao">💬 카카오로 문의</a>
+        <a href="tel:4165550521" class="btn-phone">📞 전화하기</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════ -->
+<!-- 🥗 반찬가게 (간략) -->
+<!-- ══════════════════════════════════ -->
+<div id="page-banchan" class="biz-page">
+  <div class="hero">
+    <div class="hero-bg"><div class="hero-pattern"></div>
+      <div class="hero-orb hero-orb-1" style="background:rgba(42,92,69,0.12)"></div>
+    </div>
+    <div class="container hero-content">
+      <div class="hero-eyebrow">🥗 반찬가게</div>
+      <h1 class="hero-title">오늘 저녁 걱정<br><span class="accent">덜어드립니다</span></h1>
+      <p class="hero-sub">매일 아침 만드는 신선한 반찬. 냉동 없이, 당일 판매만.</p>
+      <a href="#banchan-menu" class="hero-cta">🛒 오늘의 반찬</a>
+    </div>
+  </div>
+  <div class="info-strip">
+    <div class="container">
+      <div class="info-item"><span class="info-icon">📍</span><div><div class="info-label">주소</div><div class="info-value">6200 Finch Ave W #5, Etobicoke</div></div></div>
+      <div class="info-item"><span class="info-icon">🕐</span><div><div class="info-label">영업시간</div><div class="info-value open">10:00 — 19:00 (일 휴무)</div></div></div>
+      <div class="update-badge"><span class="update-dot"></span>카카오로 실시간 업데이트</div>
+    </div>
+  </div>
+  <div class="notice-bar">
+    <div class="container">
+      <span class="notice-icon">📋</span>
+      <span><strong>오늘의 반찬:</strong> 잡채 / 시금치나물 / 계란말이 / 어묵볶음 / 깍두기 — 재고 소진 시 조기 마감</span>
+    </div>
+  </div>
+  <section id="banchan-menu" class="menu-section fade-in">
+    <div class="container">
+      <p class="section-tag">Today's Menu</p>
+      <h2 style="font-family:'Noto Serif KR',serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:900;margin-bottom:2.5rem;">가격표</h2>
+      <div class="menu-category">
+        <div class="menu-category-title">🍱 반찬 (소/중/대)</div>
+        <div class="menu-grid">
+          <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">잡채</div><div class="menu-item-desc">당면·야채·소고기</div><span class="menu-item-tag popular">인기</span></div><div class="menu-item-price">$8/$14/$22</div></div>
+          <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">나물류</div><div class="menu-item-desc">시금치·콩나물·고사리</div></div><div class="menu-item-price">$5/$9/$15</div></div>
+          <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">김치류</div><div class="menu-item-desc">배추김치·깍두기·총각김치</div><span class="menu-item-tag popular">인기</span></div><div class="menu-item-price">$6/$11/$18</div></div>
+          <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">5찬 도시락</div><div class="menu-item-desc">오늘의 반찬 5종+공기밥</div></div><div class="menu-item-price">$16</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="contact-section fade-in">
+    <div class="container">
+      <h2>당일 재고 문의</h2>
+      <p>오늘 준비된 반찬 목록이나 사전 예약은 카카오로.</p>
+      <div class="contact-btns">
+        <a href="#" class="btn-kakao">💬 카카오로 문의</a>
+        <a href="tel:4165550633" class="btn-phone">📞 전화하기</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════ -->
+<!-- 💊 약국 (간략) -->
+<!-- ══════════════════════════════════ -->
+<div id="page-pharmacy" class="biz-page">
+  <div class="hero">
+    <div class="hero-bg"><div class="hero-pattern"></div>
+      <div class="hero-orb hero-orb-1" style="background:rgba(42,92,69,0.1)"></div>
+    </div>
+    <div class="container hero-content">
+      <div class="hero-eyebrow">💊 한인 약국</div>
+      <h1 class="hero-title">한국어로 편하게<br><span class="accent">처방·상담</span></h1>
+      <p class="hero-sub">한국어 가능 약사 상주. 한국 약·건강식품 상담도 가능합니다.</p>
+      <a href="#pharmacy-info" class="hero-cta">🕐 영업 정보</a>
+    </div>
+  </div>
+  <div class="info-strip">
+    <div class="container">
+      <div class="info-item"><span class="info-icon">📍</span><div><div class="info-label">주소</div><div class="info-value">5330 Yonge St, North York</div></div></div>
+      <div class="info-item"><span class="info-icon">🕐</span><div><div class="info-label">오늘</div><div class="info-value open">09:00 — 19:00</div></div></div>
+      <div class="update-badge"><span class="update-dot"></span>카카오로 실시간 업데이트</div>
+    </div>
+  </div>
+  <div id="pharmacy-info" class="map-section fade-in">
+    <div class="container">
+      <p class="section-tag">Hours</p>
+      <h2 style="font-family:'Noto Serif KR',serif;font-weight:900;">영업시간</h2>
+      <div class="hours-grid" style="margin-top:2rem;">
+        <div class="hour-row"><span class="hour-day">월–금</span><span class="hour-time">09:00 — 19:00</span></div>
+        <div class="hour-row"><span class="hour-day">토</span><span class="hour-time">10:00 — 17:00</span></div>
+        <div class="hour-row"><span class="hour-day">일·공휴일</span><span class="hour-time closed-day">휴무</span></div>
+      </div>
+      <div class="map-mock" style="margin-top:2rem;">
+        <div class="map-pin"><div class="map-pin-dot"></div><div class="map-address">📍 5330 Yonge St, North York</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="contact-section fade-in">
+    <div class="container">
+      <h2>약 문의·처방 확인</h2>
+      <p>처방전 사진 카카오로 보내주시면 준비 후 연락드립니다.</p>
+      <div class="contact-btns">
+        <a href="#" class="btn-kakao">💬 카카오로 문의</a>
+        <a href="tel:4165550710" class="btn-phone">📞 전화하기</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════ -->
+<!-- 👓 안경점 (간략) -->
+<!-- ══════════════════════════════════ -->
+<div id="page-optical" class="biz-page">
+  <div class="hero">
+    <div class="hero-bg"><div class="hero-pattern"></div>
+      <div class="hero-orb hero-orb-1" style="background:rgba(184,148,63,0.1)"></div>
+    </div>
+    <div class="container hero-content">
+      <div class="hero-eyebrow">👓 안경점</div>
+      <h1 class="hero-title">눈에 맞는 안경<br><span class="accent">제대로 맞춰드립니다</span></h1>
+      <p class="hero-sub">시력검사 무료. 한국 브랜드 포함 500종 이상. 당일 제작 가능.</p>
+      <a href="#optical-menu" class="hero-cta">💰 가격 안내</a>
+    </div>
+  </div>
+  <div class="info-strip">
+    <div class="container">
+      <div class="info-item"><span class="info-icon">📍</span><div><div class="info-label">주소</div><div class="info-value">5900 Yonge St #108, North York</div></div></div>
+      <div class="info-item"><span class="info-icon">🕐</span><div><div class="info-label">영업시간</div><div class="info-value open">10:00 — 19:00 (일 12–17)</div></div></div>
+      <div class="update-badge"><span class="update-dot"></span>카카오로 실시간 업데이트</div>
+    </div>
+  </div>
+  <section id="optical-menu" class="menu-section fade-in">
+    <div class="container">
+      <p class="section-tag">Pricing</p>
+      <h2 style="font-family:'Noto Serif KR',serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:900;margin-bottom:2.5rem;">가격 안내</h2>
+      <div class="menu-category">
+        <div class="menu-category-title">👓 안경</div>
+        <div class="menu-grid">
+          <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">기본 안경 패키지</div><div class="menu-item-desc">프레임+렌즈 포함, 시력검사 무료</div><span class="menu-item-tag popular">인기</span></div><div class="menu-item-price">$99~</div></div>
+          <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">블루라이트 차단</div><div class="menu-item-desc">프레임+기능성 렌즈</div></div><div class="menu-item-price">$149~</div></div>
+          <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">고굴절 렌즈</div><div class="menu-item-desc">고도근시 추천</div></div><div class="menu-item-price">$199~</div></div>
+        </div>
+      </div>
+      <div class="menu-category">
+        <div class="menu-category-title">🔵 콘택트렌즈</div>
+        <div class="menu-grid">
+          <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">일회용 (30매)</div><div class="menu-item-desc">Acuvue · Dailies</div><span class="menu-item-tag popular">인기</span></div><div class="menu-item-price">$45~</div></div>
+          <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">한국 컬러렌즈</div><div class="menu-item-desc">주문 후 1주일</div></div><div class="menu-item-price">$35~/box</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="contact-section fade-in">
+    <div class="container">
+      <h2>렌즈 주문·재고 문의</h2>
+      <p>카카오로 처방전 보내주시면 견적 먼저 드립니다.</p>
+      <div class="contact-btns">
+        <a href="#" class="btn-kakao">💬 카카오로 문의</a>
+        <a href="tel:4165550822" class="btn-phone">📞 전화하기</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════ -->
+<!-- 카카오 업데이트 시스템 설명 -->
+<!-- ══════════════════════════════════ -->
+<div class="kakao-demo">
+  <div class="container">
+    <div class="kakao-explain">
+      <p class="section-tag" style="color:var(--gold)">How It Works</p>
+      <h3>사장님이 카카오로 보내면<br>홈페이지가 바뀝니다</h3>
+      <p>관리자 페이지 없습니다. 아이디·비밀번호 없습니다.<br>카카오로 문장 하나 보내면 끝.</p>
+      <div class="kakao-examples">
+        <div class="kakao-example-msg">
+          "이번 주 토요일 쉬어요"
+          <span class="msg-arrow">→</span>
+          <span class="msg-result">영업시간 자동 업데이트</span>
+        </div>
+        <div class="kakao-example-msg">
+          "오늘 런치 스페셜 된장찌개 14.99"
+          <span class="msg-arrow">→</span>
+          <span class="msg-result">공지 배너 자동 반영</span>
+        </div>
+        <div class="kakao-example-msg">
+          "주소 바뀌었어요: 5521 → 5600 Yonge"
+          <span class="msg-arrow">→</span>
+          <span class="msg-result">주소·지도 자동 변경</span>
+        </div>
+        <div class="kakao-example-msg">
+          "메뉴 삼겹살 28에서 30으로"
+          <span class="msg-arrow">→</span>
+          <span class="msg-result">메뉴 가격 자동 수정</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="kakao-phone">
+        <div class="phone-header">
+          <div class="phone-title">
+            <span class="kakao-yellow">K</span>
+            내 가게 채널
+          </div>
+        </div>
+        <div class="chat-bot-name">Wicner Bot</div>
+        <div class="chat-bubble chat-bot">안녕하세요 사장님 😊<br>오늘도 잘 부탁드립니다!</div>
+        <div class="chat-bubble chat-owner">이번 주 토요일 쉬어요</div>
+        <div class="chat-bubble chat-bot">확인했습니다! ✅<br><strong>5월 24일(토) 휴무</strong>로 홈페이지에 반영했어요.<br>영업 재개 시 다시 알려주세요!</div>
+        <div class="chat-time">오후 2:34</div>
+        <div style="margin-top:0.75rem;">
+          <div class="chat-bubble chat-owner">삼겹살 가격 30으로 올려줘</div>
+          <div class="chat-bubble chat-bot">네! 삼겹살 <strong>$28 → $30</strong>으로 변경됐습니다 ✅</div>
+          <div class="chat-time">오후 3:12</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Vexmp 태그 -->
+<div class="vexmp-tag">
+  This site is built with <a href="#">Wicner</a> — AI Agent for Small Business
+</div>
+
+<script>
+function showBiz(id) {
+  // 페이지 전환
+  document.querySelectorAll('.biz-page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+
+  // 버튼 활성화
+  document.querySelectorAll('.biz-btn').forEach(b => b.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+
+  // 맨 위로 (배너+셀렉터 바 아래)
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // 페이드인 재실행
+  setTimeout(() => {
+    document.querySelectorAll('#page-' + id + ' .fade-in').forEach(el => {
+      el.classList.remove('visible');
+      void el.offsetWidth;
+    });
+    observeFadeIn();
+  }, 100);
+}
+
+function observeFadeIn() {
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-in:not(.visible)').forEach(el => obs.observe(el));
+}
+
+observeFadeIn();
+</script>
+</body>
+</html>
