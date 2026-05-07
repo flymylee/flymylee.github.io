@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vexmp — 사장님의 눈이 닿지 않는 곳까지</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&family=Noto+Sans+KR:wght@300;400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1710;
+    --paper: #f7f4ee;
+    --warm: #c8a96e;
+    --warm-light: #e8dcc8;
+    --accent: #2d5a3d;
+    --muted: #8a8070;
+    --red: #c0392b;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── 플로팅 CTA ── */
+  .floating-cta {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .floating-cta a {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: 2rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  }
+  .floating-cta a:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.2); }
+  .cta-kakao { background: #FEE500; color: #3C1E1E; }
+  .cta-mail  { background: var(--accent); color: #fff; }
+
+  /* ── 네비 ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.2rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(247,244,238,0.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(200,169,110,0.2);
+  }
+  .logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+  .logo span { color: var(--warm); }
+  nav ul { list-style: none; display: flex; gap: 2rem; }
+  nav ul a { text-decoration: none; color: var(--muted); font-size: 0.9rem; transition: color 0.2s; }
+  nav ul a:hover { color: var(--ink); }
+
+  /* ── 섹션 공통 ── */
+  section { padding: 8rem 2rem; }
+  .container { max-width: 960px; margin: 0 auto; }
+  .section-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--warm);
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+  }
+
+  /* ── ① 히어로 ── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding-top: 6rem;
+    position: relative;
+    overflow: hidden;
+  }
+  #hero::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,169,110,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-size: 0.8rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--warm);
+    margin-bottom: 2rem;
+    font-weight: 500;
+  }
+  .hero-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(2.4rem, 6vw, 4.2rem);
+    font-weight: 900;
+    line-height: 1.25;
+    letter-spacing: -0.03em;
+    margin-bottom: 2rem;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--warm);
+    font-family: 'DM Serif Display', serif;
+  }
+  .hero-body {
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    color: #4a4540;
+    max-width: 600px;
+    line-height: 1.9;
+    margin-bottom: 3rem;
+  }
+  .hero-body p + p { margin-top: 1rem; }
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 1rem 2rem;
+    border-radius: 0.25rem;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .hero-cta:hover { background: var(--accent); transform: translateY(-1px); }
+  .hero-scroll {
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--muted);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    animation: bounce 2s infinite;
+  }
+  @keyframes bounce {
+    0%,100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+  }
+
+  /* ── ② 철학 ── */
+  #philosophy {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .philosophy-quote {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+    font-weight: 700;
+    line-height: 1.6;
+    border-left: 3px solid var(--warm);
+    padding-left: 2rem;
+    margin-bottom: 2.5rem;
+    letter-spacing: -0.02em;
+  }
+  .philosophy-sub {
+    color: #a09880;
+    font-size: 1rem;
+    max-width: 600px;
+    line-height: 1.9;
+  }
+  .philosophy-tagline {
+    margin-top: 3rem;
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    color: var(--warm);
+    font-weight: 700;
+  }
+
+  /* ── ③ 업종별 ── */
+  #services { background: var(--paper); }
+  .services-intro {
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    font-family: 'Noto Serif KR', serif;
+    font-weight: 700;
+    margin-bottom: 4rem;
+    max-width: 700px;
+    line-height: 1.6;
+  }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .service-card {
+    background: #fff;
+    border: 1px solid var(--warm-light);
+    border-radius: 0.5rem;
+    padding: 2rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--warm);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .service-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
+  .service-card:hover::before { opacity: 1; }
+  .service-icon { font-size: 2rem; margin-bottom: 1rem; }
+  .service-name {
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--warm);
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+  }
+  .service-pain {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+  .service-solution {
+    font-size: 0.9rem;
+    color: #5a5248;
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+  }
+  .service-roi {
+    display: inline-block;
+    background: var(--warm-light);
+    color: var(--accent);
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.3rem 0.75rem;
+    border-radius: 1rem;
+    letter-spacing: 0.05em;
+  }
+  .placeholder-badge {
+    display: inline-block;
+    background: #fff3cd;
+    color: #856404;
+    font-size: 0.7rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.25rem;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+  }
+
+  /* ── ④ 예시 ── */
+  #examples { background: #f0ece2; }
+  .examples-intro {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    font-weight: 700;
+    margin-bottom: 3rem;
+    max-width: 600px;
+    line-height: 1.6;
+  }
+  .example-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    padding: 0.5rem 1.25rem;
+    border: 1px solid var(--warm-light);
+    background: #fff;
+    border-radius: 2rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 400;
+    color: var(--muted);
+  }
+  .tab-btn.active {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+    font-weight: 500;
+  }
+  .example-panel { display: none; }
+  .example-panel.active { display: block; }
+  .example-box {
+    background: #fff;
+    border-radius: 0.5rem;
+    padding: 2rem;
+    border: 1px solid var(--warm-light);
+  }
+  .example-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+  }
+  .example-output {
+    font-size: 0.95rem;
+    line-height: 1.9;
+    color: var(--ink);
+    white-space: pre-line;
+  }
+  .example-placeholder {
+    text-align: center;
+    padding: 3rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+    border: 2px dashed var(--warm-light);
+    border-radius: 0.5rem;
+  }
+
+  /* ── Before / After 좌우 분할 ── */
+  .ba-wrap {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+  .ba-col { display: flex; flex-direction: column; }
+  .ba-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+  }
+  .ba-before .ba-label { color: var(--muted); }
+  .ba-after .ba-label { color: var(--accent); }
+  .ba-caption {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+  .ba-bubble {
+    background: #fff;
+    border: 1px solid var(--warm-light);
+    border-radius: 0.75rem;
+    padding: 1rem 1.25rem;
+    font-size: 0.88rem;
+    line-height: 1.8;
+    color: var(--ink);
+    position: relative;
+  }
+  .before-bubble {
+    border-color: #ddd;
+    background: #f9f9f9;
+    color: #666;
+  }
+  .after-bubble {
+    border-color: rgba(45,90,61,0.2);
+    background: #f4f8f5;
+  }
+  .ba-note {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    color: #999;
+    font-style: italic;
+  }
+  .ba-tag {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.7rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 1rem;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+  .ba-empty {
+    border: 2px dashed #ddd;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    text-align: center;
+    color: #aaa;
+    font-size: 0.88rem;
+  }
+  .ba-empty small {
+    display: block;
+    margin-top: 0.3rem;
+    font-size: 0.78rem;
+    color: #bbb;
+  }
+  .ba-divider {
+    font-size: 1.5rem;
+    color: var(--warm);
+    padding-top: 2.5rem;
+    font-weight: 700;
+  }
+  @media (max-width: 640px) {
+    .ba-wrap { grid-template-columns: 1fr; }
+    .ba-divider { text-align: center; padding-top: 0; transform: rotate(90deg); }
+  }
+
+  /* ── ⑤ 연락 ── */
+  #contact {
+    background: var(--ink);
+    color: var(--paper);
+    text-align: center;
+  }
+  .contact-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 900;
+    margin-bottom: 1.5rem;
+    line-height: 1.3;
+    letter-spacing: -0.03em;
+  }
+  .contact-sub {
+    color: #a09880;
+    font-size: 1rem;
+    margin-bottom: 3rem;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.9;
+  }
+  .contact-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .btn-kakao {
+    background: #FEE500;
+    color: #3C1E1E;
+    padding: 1rem 2rem;
+    border-radius: 0.25rem;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.95rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .btn-mail {
+    background: transparent;
+    color: var(--warm);
+    padding: 1rem 2rem;
+    border-radius: 0.25rem;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    border: 1px solid var(--warm);
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .btn-kakao:hover, .btn-mail:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+  .btn-mail:hover { background: var(--warm); color: var(--ink); }
+
+  .disclaimer {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    color: #605848;
+    font-size: 0.8rem;
+    line-height: 1.8;
+  }
+
+  /* ── ⑥ Why Now ── */
+  #why-now { background: var(--ink); color: var(--paper); }
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+  .why-card {
+    border-left: 2px solid var(--warm);
+    padding-left: 1.5rem;
+  }
+  .why-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.5rem;
+    color: var(--warm);
+    opacity: 0.4;
+    line-height: 1;
+    margin-bottom: 0.75rem;
+  }
+  .why-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: var(--paper);
+  }
+  .why-body {
+    font-size: 0.88rem;
+    color: #a09880;
+    line-height: 1.9;
+  }
+  .why-source {
+    font-size: 0.75rem;
+    color: #605848;
+    margin-top: 0.5rem;
+  }
+  .why-closing {
+    margin-top: 4rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    font-weight: 700;
+    color: var(--warm);
+    text-align: center;
+  }
+
+  /* ── ⑦ 악플 유형 매핑 ── */
+  .review-type-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2.5rem;
+    font-size: 0.88rem;
+  }
+  .review-type-table th {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    background: var(--ink);
+    color: var(--warm);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .review-type-table td {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid var(--warm-light);
+    line-height: 1.7;
+    vertical-align: top;
+  }
+  .review-type-table tr:last-child td { border-bottom: none; }
+  .review-type-table tr:hover td { background: #faf8f3; }
+  .tag-danger { color: var(--red); font-weight: 500; font-size: 0.8rem; }
+  .tag-safe { color: var(--accent); font-weight: 500; font-size: 0.8rem; }
+
+  /* ── 소문 케이스 ── */
+  .rumor-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+  @media (max-width: 640px) { .rumor-wrap { grid-template-columns: 1fr; } }
+  .rumor-col { }
+  .rumor-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .rumor-before .rumor-label { color: var(--muted); }
+  .rumor-after .rumor-label { color: var(--accent); }
+  .rumor-post {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    padding: 1.25rem;
+    font-size: 0.82rem;
+    line-height: 1.85;
+    color: #555;
+  }
+  .rumor-post .post-title {
+    font-weight: 700;
+    color: var(--red);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+  .rumor-post .post-meta {
+    font-size: 0.72rem;
+    color: #999;
+    margin-bottom: 0.75rem;
+  }
+  .rumor-reply {
+    background: #f4f8f5;
+    border: 1px solid rgba(45,90,61,0.2);
+    border-radius: 0.5rem;
+    padding: 1.25rem;
+    font-size: 0.88rem;
+    line-height: 1.9;
+    color: var(--ink);
+  }
+  .rumor-tip {
+    margin-top: 0.75rem;
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-style: italic;
+    line-height: 1.7;
+  }
+
+  /* ── ⑧ 못 도와드리는 경우 ── */
+  #limits { background: #f0ece2; }
+  .limits-intro {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    font-weight: 900;
+    line-height: 1.4;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+  }
+  .limits-sub {
+    font-size: 1rem;
+    color: #5a5248;
+    margin-bottom: 3rem;
+    line-height: 1.8;
+  }
+  .limit-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .limit-item {
+    background: #fff;
+    border: 1px solid var(--warm-light);
+    border-radius: 0.5rem;
+    padding: 1.5rem 2rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.25rem;
+    align-items: start;
+  }
+  .limit-icon {
+    font-size: 1.5rem;
+    padding-top: 0.1rem;
+  }
+  .limit-title {
+    font-family: 'Noto Serif KR', serif;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+    color: var(--ink);
+  }
+  .limit-desc {
+    font-size: 0.88rem;
+    color: #5a5248;
+    line-height: 1.85;
+  }
+  .limits-closing {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: var(--ink);
+    border-radius: 0.5rem;
+    text-align: center;
+    color: var(--warm);
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.7;
+  }
+
+  /* ── ⑨ 걱정되시죠 ── */
+  #worries { background: var(--paper); }
+  .worry-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: 2.5rem;
+  }
+  .worry-item {
+    border-left: 3px solid var(--warm-light);
+    padding-left: 2rem;
+    transition: border-color 0.2s;
+  }
+  .worry-item:hover { border-color: var(--warm); }
+  .worry-q {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 0.75rem;
+    line-height: 1.5;
+  }
+  .worry-a {
+    font-size: 0.92rem;
+    color: #5a5248;
+    line-height: 1.95;
+  }
+  .worry-a strong { color: var(--accent); }
+  .worries-closing {
+    margin-top: 3rem;
+    text-align: center;
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.7;
+  }
+
+  /* ── 챗봇 위젯 — 비활성화 ── */
+
+  /* ── 반응형 ── */
+  @media (max-width: 768px) {
+    nav ul { display: none; }
+    section { padding: 5rem 1.25rem; }
+    .floating-cta { bottom: 1.25rem; right: 1.25rem; }
+    .floating-cta a { padding: 0.65rem 1rem; font-size: 0.8rem; }
+    .chat-widget { left: 1.25rem; bottom: 1.25rem; }
+    .chat-box { width: 280px; }
+  }
+
+  /* ── 스크롤 페이드인 ── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- 네비 -->
+<nav>
+  <div class="logo">Vex<span>mp</span></div>
+  <ul>
+    <li><a href="#philosophy">철학</a></li>
+    <li><a href="#why-now">왜 지금</a></li>
+    <li><a href="#services">업종별</a></li>
+    <li><a href="#examples">예시</a></li>
+    <li><a href="#contact">연락</a></li>
+  </ul>
+</nav>
+
+<!-- 플로팅 CTA -->
+<div class="floating-cta">
+  <a href="https://open.kakao.com/me/wicner" class="cta-kakao">💬 카카오 채널</a>
+  <a href="mailto:aiman03@sahayana.hk" class="cta-mail">✉ 이메일</a>
+</div>
+
+<!-- ① 히어로 -->
+<section id="hero">
+  <div class="container">
+    <p class="hero-eyebrow">Vexmp · AI Research for Small Business</p>
+    <h1 class="hero-title">
+      저는<br>
+      AI 연구자입니다.
+    </h1>
+    <div class="hero-body">
+      <p>AI가 실제 비즈니스에 얼마나, 어떤 방식으로 도움이 될 수 있는지 —<br>
+      그 가능성과 한계를 직접 조사하고 있습니다.</p>
+      <p>토론토의 경기 불황, 저도 같이 느끼고 있습니다.<br>
+      사장님 가게에서 함께 답을 찾아보고 싶습니다.</p>
+    </div>
+    <a href="#contact" class="hero-cta">함께 해보기 →</a>
+    <div class="hero-scroll">↓ 스크롤</div>
+  </div>
+</section>
+
+<!-- ② 철학 -->
+<section id="philosophy">
+  <div class="container fade-in">
+    <p class="section-label" style="color:var(--warm)">Philosophy</p>
+    <div class="philosophy-quote">
+      "사장님이 수십 년 쌓아온 것들 —<br>
+      단골 얼굴, 잘 팔리는 날, 손님 기분.<br>
+      그 지혜가 AI를 만나면 더 멀리 닿습니다."
+    </div>
+    <p class="philosophy-sub">
+      AI는 사장님의 자리를 대신하는 게 아닙니다.<br>
+      사장님이 이미 알고 있는데 손이 안 갔던 것들 —<br>
+      그걸 대신 움직여드리는 도구입니다.<br><br>
+      예약 앱도, POS도, 카카오도 그대로 쓰세요.<br>
+      Vexmp는 거기서 멈추는 곳부터 시작합니다.
+    </p>
+    <p class="philosophy-tagline">
+      "있는 것 위에 얹습니다. 버릴 것 없습니다."
+    </p>
+  </div>
+</section>
+
+<!-- ③ 업종별 -->
+<section id="services">
+  <div class="container">
+    <p class="section-label">Services</p>
+    <p class="services-intro fade-in">
+      업종은 달라도 페인포인트는 같습니다.<br>
+      "알면서도 손이 안 가는 것."
+    </p>
+    <div class="services-grid">
+
+      <div class="service-card fade-in">
+        <div class="service-icon">✂️</div>
+        <p class="service-name">미용실 · 네일샵</p>
+        <p class="service-pain">
+          "예약하고 그냥 안 오는 손님,<br>그 시간이 그냥 날아가요."
+        </p>
+        <p class="service-solution">
+          노쇼 리마인더, 단골 재방문 문자, 악플 대응 초안.<br>
+          단골과 새 손님에게 각각 맞는 톤으로 말합니다.
+        </p>
+<!--        <span class="service-roi">월 +$900~1,300 추정</span>-->
+      </div>
+
+      <div class="service-card fade-in">
+        <div class="service-icon">🍽️</div>
+        <p class="service-name">식당</p>
+        <p class="service-pain">
+          "주중엔 한산한데 어떻게 해야 할지<br>바빠서 손을 못 대요."
+        </p>
+        <p class="service-solution">
+          한산 시간대 프로모션, 생일 문자, 구글 악플 맞춤 대응.<br>
+          남은 재료 말해주시면 오늘의 메뉴도 제안합니다.
+        </p>
+<!--        <span class="service-roi">월 +$1,000~1,600 추정</span>-->
+      </div>
+
+      <div class="service-card fade-in">
+        <div class="service-icon">🥘</div>
+        <p class="service-name">반찬가게</p>
+        <p class="service-pain">
+          "주말엔 다 팔리는데 주중엔<br>얼마나 만들어야 할지 모르겠어요."
+        </p>
+        <p class="service-solution">
+          날씨 연동 발주 제안, 재고 임박 세일 문자.<br>
+          사장님 감각에 날씨 데이터를 더해 더 정확하게.
+        </p>
+<!--        <span class="service-roi">월 +$700~1,200 추정</span>-->
+      </div>
+
+      <div class="service-card fade-in">
+        <div class="service-icon">📚</div>
+        <p class="service-name">학원</p>
+        <p class="service-pain">
+          "말 없이 조용히 그냥 안 오더라고요.<br>그게 제일 무섭죠."
+        </p>
+        <p class="service-solution">
+          결석 패턴 감지 선제 연락, 성과 리포트 초안.<br>
+          부모님이 성과를 느낄 때 이탈이 멈춥니다.
+        </p>
+<!--        <span class="service-roi">월 +$1,500~2,500 추정</span>-->
+      </div>
+
+    </div>
+
+<!--    <p style="margin-top:2.5rem; font-size:0.8rem; color:var(--muted); line-height:1.8;">
+      * 위 수치는 업계 평균 기반 추정치입니다. 사장님께서 조금만 더 함께해주시면 효과는 훨씬 더 나아집니다.
+    </p>-->
+  </div>
+</section>
+
+<!-- ④ 예시 -->
+<section id="examples">
+  <div class="container">
+    <p class="section-label">Before / After</p>
+    <p class="examples-intro fade-in">
+      "어떻게 보내지..." 에서<br>
+      손님별 맞춤 문자까지.
+    </p>
+
+    <div class="example-tabs">
+      <button class="tab-btn active" onclick="switchTab('nosho')">노쇼 리마인더</button>
+      <button class="tab-btn" onclick="switchTab('review')">악플 대응</button>
+      <button class="tab-btn" onclick="switchTab('promo')">한산 프로모션</button>
+      <button class="tab-btn" onclick="switchTab('report')">성과 리포트</button>
+    </div>
+
+    <div id="tab-nosho" class="example-panel active">
+      <div class="ba-wrap">
+        <div class="ba-col ba-before">
+          <p class="ba-label">Before</p>
+          <p class="ba-caption">사장님이 지금 하시는 것</p>
+          <div class="ba-bubble before-bubble">
+            "내일 예약 있으신 분들<br>꼭 와주세요 🙏"
+            <span class="ba-note">단체 복붙 발송</span>
+          </div>
+          <div class="ba-empty">
+            <span>혹은 아무것도 못 보냄</span>
+            <small>바빠서, 뭐라고 써야 할지 몰라서</small>
+          </div>
+        </div>
+        <div class="ba-divider">→</div>
+        <div class="ba-col ba-after">
+          <p class="ba-label">After</p>
+          <p class="ba-caption">Vexmp — 손님별 맞춤 초안</p>
+          <div class="ba-bubble after-bubble">
+            <span class="ba-tag">단골 김선생님</span>
+            "선생님, 내일 2시 예약 확인드려요 😊<br>지난번 컬러 유지 잘 되고 계신가요?<br>혹시 변경 필요하시면 미리 알려주세요!"
+          </div>
+          <div class="ba-bubble after-bubble" style="margin-top:0.75rem;">
+            <span class="ba-tag">새 손님 박선생님</span>
+            "안녕하세요! 내일 오후 4시 첫 방문이시죠 🌿<br>오시기 전에 궁금하신 점 있으시면<br>편하게 물어봐 주세요."
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-review" class="example-panel">
+      <div class="ba-wrap">
+        <div class="ba-col ba-before">
+          <p class="ba-label">Before</p>
+          <p class="ba-caption">사장님이 지금 하시는 것</p>
+          <div class="ba-bubble before-bubble">
+            "감사합니다. 다음엔 더 잘하겠습니다."
+            <span class="ba-note">화나지만 참고 쓴 답글</span>
+          </div>
+          <div class="ba-empty">
+            <span>혹은 그냥 방치</span>
+            <small>뭐라고 써야 할지 모르겠어서</small>
+          </div>
+        </div>
+        <div class="ba-divider">→</div>
+        <div class="ba-col ba-after">
+          <p class="ba-label">After</p>
+          <p class="ba-caption">Vexmp — 톤 조절 대응 초안</p>
+          <div class="ba-bubble after-bubble">
+            <span class="ba-tag">구글 리뷰 대응</span>
+            "소중한 의견 감사드립니다. 말씀해주신 부분은 저희가 미처 챙기지 못한 부분이었습니다. 직접 연락 주시면 정성껏 도와드리겠습니다. 더 나은 모습으로 보답하겠습니다."
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-promo" class="example-panel">
+      <div class="ba-wrap">
+        <div class="ba-col ba-before">
+          <p class="ba-label">Before</p>
+          <p class="ba-caption">사장님이 지금 하시는 것</p>
+          <div class="ba-empty" style="margin-top:1rem;">
+            <span>아무것도 못 함</span>
+            <small>한산한 거 알면서도<br>바빠서 손이 안 가서</small>
+          </div>
+        </div>
+        <div class="ba-divider">→</div>
+        <div class="ba-col ba-after">
+          <p class="ba-label">After</p>
+          <p class="ba-caption">Vexmp — 한산 시간대 프로모션 초안</p>
+          <div class="ba-bubble after-bubble">
+            <span class="ba-tag">화요일 점심 단골 대상</span>
+            "선생님, 오늘 화요일 점심 조용해요 🍽️<br>오늘 오시면 된장찌개 서비스 드릴게요!<br>12시~2시 사이에 오시면 됩니다 😊"
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-report" class="example-panel">
+      <div class="ba-wrap">
+        <div class="ba-col ba-before">
+          <p class="ba-label">Before</p>
+          <p class="ba-caption">사장님이 지금 하시는 것</p>
+          <div class="ba-empty" style="margin-top:1rem;">
+            <span>성과 리포트 없음</span>
+            <small>만들고 싶어도<br>시간이 없어서</small>
+          </div>
+        </div>
+        <div class="ba-divider">→</div>
+        <div class="ba-col ba-after">
+          <p class="ba-label">After</p>
+          <p class="ba-caption">Vexmp — 학부모용 월간 리포트 초안</p>
+          <div class="ba-bubble after-bubble">
+            <span class="ba-tag">김민준 학생 3월 리포트</span>
+            "3월 한 달 동안 민준이는 총 12회 수업 중 11회 참석했습니다. 수학 연산 속도가 지난달 대비 15% 향상되었고, 특히 분수 단원에서 눈에 띄는 성장을 보였습니다. 4월에는 도형 영역을 집중적으로 다룰 예정입니다."
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:2.5rem; text-align:center; padding-top:1.5rem; border-top:1px solid var(--warm-light);">
+      <p style="font-family:'Noto Serif KR',serif; font-size:1.05rem; font-weight:700; margin-bottom:1rem;">사장님 상황에 맞는 초안, 직접 받아보세요.</p>
+      <a href="#contact" style="display:inline-block;background:var(--accent);color:#fff;text-decoration:none;padding:0.85rem 2rem;border-radius:0.25rem;font-size:0.95rem;font-weight:500;font-family:'Noto Sans KR',sans-serif;box-shadow:0 4px 16px rgba(45,90,61,0.25);">💬 카카오로 문의하기</a>
+    </div>
+  </div>
+</section>
+
+<!-- ⑥ Why Now -->
+<section id="why-now">
+  <div class="container fade-in">
+    <p class="section-label" style="color:var(--warm)">Why Now</p>
+    <h2 style="font-family:'Noto Serif KR',serif; font-size:clamp(1.6rem,4vw,2.4rem); font-weight:900; line-height:1.3; letter-spacing:-0.03em; margin-bottom:1rem;">
+      왜 지금인가
+    </h2>
+    <p style="color:#a09880; font-size:1rem; max-width:560px; line-height:1.9;">
+      경기가 안 좋다는 건 압니다. 그래서 더, 지금 써야 합니다.
+    </p>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-num">01</div>
+        <p class="why-title">폐업이 창업을 앞지르고 있습니다</p>
+        <p class="why-body">캐나다 소상공인 폐업률이 창업률을 넘어선 상황이 2024년 초부터 이어지고 있습니다. 버티는 것만으로는 부족합니다.</p>
+        <p class="why-source">출처: CFIB, 2025 Q2</p>
+      </div>
+      <div class="why-card">
+        <div class="why-num">02</div>
+        <p class="why-title">써봤지만 제대로 쓰는 곳은 10%</p>
+        <p class="why-body">소상공인 92%가 디지털 도구를 써봤습니다. 그런데 실제로 활용하는 곳은 10%뿐입니다. 도구 문제가 아닙니다. 바빠서 못 쓰는 겁니다.</p>
+        <p class="why-source">출처: CFIB 디지털 도입 보고서</p>
+      </div>
+      <div class="why-card">
+        <div class="why-num">03</div>
+        <p class="why-title">신규보다 기존 손님이 답입니다</p>
+        <p class="why-body">수요가 줄었을 때 신규 고객을 찾는 건 기존 고객 유지보다 5배 더 듭니다. 이미 오신 분들을 한 번 더 오게 만드는 것 — 그게 지금 현실적인 답입니다.</p>
+        <p class="why-source">출처: HBR, 고객 유지 비용 연구</p>
+      </div>
+      <div class="why-card">
+        <div class="why-num">04</div>
+        <p class="why-title">언어·네트워크 장벽, AI로 좁힐 수 있습니다</p>
+        <p class="why-body">이민자 소유 사업체는 평균 대비 생산성이 9.4% 낮습니다. 언어와 네트워크 격차가 원인입니다. 한국어로 생각하고, 영어로 내보내는 것 — AI가 그 간격을 메웁니다.</p>
+        <p class="why-source">출처: Statistics Canada, 2025</p>
+      </div>
+    </div>
+    <p class="why-closing">"조건이 불리할수록, 도구 하나가 더 크게 작동합니다."</p>
+  </div>
+</section>
+
+<!-- ⑦ 악플 대응 확장 + 유형 매핑 -->
+<section id="review-guide" style="background:var(--paper);">
+  <div class="container fade-in">
+    <p class="section-label">Review Response</p>
+    <h2 style="font-family:'Noto Serif KR',serif; font-size:clamp(1.4rem,3.5vw,2rem); font-weight:900; line-height:1.35; letter-spacing:-0.02em; margin-bottom:1rem;">
+      악플, 어떻게 대응하느냐가<br>더 중요합니다
+    </h2>
+    <p style="font-size:0.95rem; color:#5a5248; max-width:560px; line-height:1.9; margin-bottom:3rem;">
+      구경하는 사람들이 판단하는 건 원글이 아닙니다.<br>사장님 답글입니다.
+    </p>
+
+    <!-- 추가 Before/After: 감정 폭발형 -->
+    <p style="font-family:'Noto Serif KR',serif; font-weight:700; font-size:1rem; margin-bottom:1.25rem; color:var(--ink);">유형 ① 감정 폭발형</p>
+    <div class="ba-wrap" style="margin-bottom:2.5rem;">
+      <div class="ba-col ba-before">
+        <p class="ba-label">Before</p>
+        <p class="ba-caption">감정이 올라와서 쓴 답글</p>
+        <div class="ba-bubble before-bubble">
+          "저희가 얼마나 정성껏 준비하는지 아세요? 이런 리뷰 남기시는 분들 때문에 진심으로 힘듭니다. 저희도 사람입니다."
+          <span class="ba-note">올리고 나서 후회하는 유형</span>
+        </div>
+      </div>
+      <div class="ba-divider">→</div>
+      <div class="ba-col ba-after">
+        <p class="ba-label">After</p>
+        <p class="ba-caption">Vexmp — 톤 조절 대응 초안</p>
+        <div class="ba-bubble after-bubble">
+          <span class="ba-tag">구글 리뷰 대응</span>
+          "소중한 말씀 감사합니다. 말씀해주신 부분에서 불편함을 느끼셨다면 저희가 더 신경 썼어야 할 부분이 있었을 것 같습니다. 직접 연락 주시면 더 잘 도와드리겠습니다."
+        </div>
+      </div>
+    </div>
+
+    <!-- 추가 Before/After: 삭제 시도형 -->
+    <p style="font-family:'Noto Serif KR',serif; font-weight:700; font-size:1rem; margin-bottom:1.25rem; color:var(--ink);">유형 ② 삭제 시도형</p>
+    <div class="ba-wrap" style="margin-bottom:3rem;">
+      <div class="ba-col ba-before">
+        <p class="ba-label">Before</p>
+        <p class="ba-caption">삭제 요청 + 법적 대응 예고</p>
+        <div class="ba-bubble before-bubble">
+          "이 리뷰는 사실과 다른 허위 내용입니다. 플랫폼에 신고 조치했습니다. 법적 대응을 검토 중입니다."
+          <span class="ba-note">삭제 거의 안 됨 — 오히려 더 주목받는 구조</span>
+        </div>
+      </div>
+      <div class="ba-divider">→</div>
+      <div class="ba-col ba-after">
+        <p class="ba-label">After</p>
+        <p class="ba-caption">Vexmp — 조용한 정정 초안</p>
+        <div class="ba-bubble after-bubble">
+          <span class="ba-tag">구글 리뷰 대응</span>
+          "말씀 감사합니다. 저희 경험과 다소 다른 부분이 있어 아쉽습니다. 직접 연락 주시면 저희가 확인하고 성심껏 도와드리겠습니다."
+        </div>
+      </div>
+    </div>
+
+    <!-- 소문/루머 케이스 -->
+    <p style="font-family:'Noto Serif KR',serif; font-weight:700; font-size:1rem; margin-bottom:1.25rem; color:var(--ink);">유형 ③ 온라인 소문·루머형</p>
+    <p style="font-size:0.88rem; color:var(--muted); margin-bottom:1.25rem; line-height:1.8;">당사자도 아닌 제3자가 올린 글. 사실 여부 확인 불가. 반박하면 오히려 인정 꼴.</p>
+    <div class="rumor-wrap">
+      <div class="rumor-col rumor-before">
+        <p class="rumor-label">Before — 커뮤니티 루머글</p>
+        <div class="rumor-post">
+          <p class="post-title">OO 의원 과잉 진료 대박이네요... 원장님 면허도 의심스러움</p>
+          <p class="post-meta">작성자: 단풍잎 | 조회수: 2,841 | 댓글 9</p>
+          <p>여기 원장님, 실력보다는 영업에만 미친 것 같아요. 제 지인은 멀쩡한 치아 뽑으라고 권유받았다는데, 알고 보니 리베이트 때문에 멀쩡한 사람들 수술 시키는 걸로 유명하다네요. 예전에 다른 지역에서도 비슷한 일로 소송 걸려서 도망치듯 여기로 옮겨온 거라는 카더라가 있던데... 당해보지 않으면 모르니 다들 조심하시길요.</p>
+        </div>
+      </div>
+      <div class="rumor-col rumor-after">
+        <p class="rumor-label">After — 권장 대응</p>
+        <div class="rumor-reply">
+          안녕하세요.<br><br>
+          해당 글을 확인했습니다.<br><br>
+          본원은 모든 진료와 처방에 있어 환자분의 상태와 의학적 근거를 최우선으로 하며, 정해진 의료 가이드라인을 엄격히 준수하고 있습니다. 특히 원장님의 이력과 면허 사항은 관련 법령에 따라 투명하게 관리되고 있음을 알려드립니다.
+          익명 게시판의 특성상 확인되지 않은 개인적인 추측이나 외부의 소문을 언급하는 것에 대해서는 일일이 대응하지 않으나, 본원의 진료 시스템이나 과정에 대해 궁금한 점이 있으신 분은 언제든 원내 채널로 문의해 주시기 바랍니다. 객관적인 근거를 바탕으로 상세히 설명해 드리겠습니다.
+        </div>
+        <p class="rumor-tip">업장명 먼저 언급하면 자수 꼴. 대응 자체의 품위로 말한다. 구경하는 사람들은 누가 썼냐보다 어떻게 썼냐로 판단한다.</p>
+      </div>
+    </div>
+
+    <!-- 유형 매핑 테이블 -->
+    <p style="font-family:'Noto Serif KR',serif; font-weight:700; font-size:1rem; margin-top:3rem; margin-bottom:1rem; color:var(--ink);">악플 유형별 대응 원칙</p>
+    <div style="overflow-x:auto;">
+      <table class="review-type-table">
+        <thead>
+          <tr>
+            <th>유형</th>
+            <th>권장 대응</th>
+            <th>금기</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>경험 불만형</strong><br><small>실제 불편 경험 서술</small></td>
+            <td><span class="tag-safe">공감 + 직접 연락 유도</span></td>
+            <td><span class="tag-danger">반박, 해명 나열</span></td>
+          </tr>
+          <tr>
+            <td><strong>과장·허위형</strong><br><small>사실과 다른 내용 포함</small></td>
+            <td><span class="tag-safe">조용한 정정 + 연락 유도</span></td>
+            <td><span class="tag-danger">허위라고 공개 지목</span></td>
+          </tr>
+          <tr>
+            <td><strong>감정 폭발형</strong><br><small>욕설·과격한 표현</small></td>
+            <td><span class="tag-safe">짧고 품위 있게, 1회만</span></td>
+            <td><span class="tag-danger">맞받아치기</span></td>
+          </tr>
+          <tr>
+            <td><strong>소문·루머형</strong><br><small>제3자가 들은 이야기</small></td>
+            <td><span class="tag-safe">원칙 언급 + 내부 채널 안내</span></td>
+            <td><span class="tag-danger">업장명 먼저 언급, 과잉 해명</span></td>
+          </tr>
+          <tr>
+            <td><strong>연속 악플형</strong><br><small>같은 사람이 여러 번</small></td>
+            <td><span class="tag-safe">1회 대응 후 무대응 유지</span></td>
+            <td><span class="tag-danger">매번 대응 (노출만 늘어남)</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ⑧ 걱정되시죠 -->
+<section id="worries">
+  <div class="container fade-in">
+    <p class="section-label">FAQ</p>
+    <h2 style="font-family:'Noto Serif KR',serif; font-size:clamp(1.4rem,3.5vw,2rem); font-weight:900; line-height:1.35; letter-spacing:-0.02em; margin-bottom:1rem;">
+      걱정되시는 거 압니다
+    </h2>
+    <p style="font-size:0.95rem; color:#5a5248; max-width:560px; line-height:1.9; margin-bottom:0;">
+      솔직하게 답합니다.
+    </p>
+    <div class="worry-list">
+      <div class="worry-item">
+        <p class="worry-q">"AI가 뭘 어떻게 해준다는 건지 잘 모르겠어요."</p>
+        <p class="worry-a">
+          복잡하게 생각 안 하셔도 됩니다.<br>
+          사장님이 카톡으로 오늘 상황 한 줄 보내주시면 — 저희가 문자 초안, 포스팅 초안을 드립니다.<br>
+          마음에 드시면 그대로 보내시고, 아니면 수정하시면 됩니다.<br>
+          <strong>사장님이 쓰시는 건 카톡 한 줄. 나머지는 저희가 합니다.</strong>
+        </p>
+      </div>
+      <div class="worry-item">
+        <p class="worry-q">"효과가 있을지 모르겠어요."</p>
+        <p class="worry-a">
+          맞습니다. 해보기 전엔 모릅니다.<br>
+          그래서 써보시고 별로면 그냥 안 하시면 됩니다.<br>
+          한 가지만 말씀드리면 — 노쇼 한 건만 막아도 $65입니다.
+        </p>
+      </div>
+    </div>
+    <p class="worries-closing">
+      "모르는 채로 안 하시는 것보다 — 7일 써보시는 게 낫습니다."
+    </p>
+  </div>
+</section>
+
+<!-- ⑨ 못 도와드리는 경우 -->
+<section id="limits">
+  <div class="container fade-in">
+    <p class="section-label">Honest Note</p>
+    <h2 class="limits-intro">저도 못 도와드리는<br>경우가 있습니다</h2>
+    <p class="limits-sub">모든 사장님을 돕고 싶지만, 솔직하게 말씀드릴게요.</p>
+    <div class="limit-list">
+      <div class="limit-item">
+        <div class="limit-icon">🤷</div>
+        <div>
+          <p class="limit-title">뭐가 필요한지 아직 모르시는 분</p>
+          <p class="limit-desc">"일단 뭔가 해주세요" — 방향이 없으면 저도 방향을 못 잡습니다. 가장 불편한 것 하나만 말씀해 주실 수 있으면 충분합니다. 그게 아직 안 되시면, 조금 더 생각해보신 뒤에 오세요.</p>
+        </div>
+      </div>
+      <div class="limit-item">
+        <div class="limit-icon">🔄</div>
+        <div>
+          <p class="limit-title">결과물을 계속 바꾸고 싶으신 분</p>
+          <p class="limit-desc">방향이 바뀔 때마다 처음부터 다시입니다. 저희는 사장님이 원하시는 걸 빠르게 꺼내드리는 서비스입니다. "뭔가 다른 것도 해봐요"가 반복되면 둘 다 지칩니다.</p>
+        </div>
+      </div>
+      <div class="limit-item">
+        <div class="limit-icon">🤖</div>
+        <div>
+          <p class="limit-title">AI가 알아서 다 해줄 거라 기대하시는 분</p>
+          <p class="limit-desc">AI는 사장님 머릿속에 있는 걸 꺼내는 도구입니다. 사장님 판단과 최종 전송은 항상 사장님 몫입니다. 그 30%가 싫으시면, 저희 서비스가 맞지 않을 수 있습니다.</p>
+        </div>
+      </div>
+      <div class="limit-item">
+        <div class="limit-icon">⏱️</div>
+        <div>
+          <p class="limit-title">2주 만에 ROI를 요구하시는 분</p>
+          <p class="limit-desc">첫 달은 패턴을 읽는 기간입니다. 성과가 보이기 시작하면 그때부터 빠릅니다. 당장 숫자가 안 나오면 의심부터 하신다면, 저도 드릴 수 있는 게 없습니다.</p>
+        </div>
+      </div>
+    </div>
+    <div class="limits-closing">
+      "준비되셨다면 — 그때 다시 오세요.<br>반갑게 맞겠습니다."
+    </div>
+  </div>
+</section>
+
+<!-- ⑤ 연락 -->
+<section id="contact">
+  <div class="container fade-in">
+    <p class="section-label" style="color:var(--warm)">Contact</p>
+    <h2 class="contact-title">
+      지금 바로<br>말씀해주세요.
+    </h2>
+    <p class="contact-sub">
+      <!-- 한 줄 카피 준비 중 -->
+      사장님 업종과 가장 불편한 점 하나만 말씀해주시면 됩니다.
+    </p>
+    <div class="contact-buttons">
+      <a href="https://open.kakao.com/me/wicner" class="btn-kakao">💬 카카오 채널로 문의</a>
+      <a href="mailto:aiman03@sahayana.hk" class="btn-mail">✉ 이메일 문의</a>
+    </div>
+    <p class="disclaimer">
+      Vexmp는 토론토 기반 독립 AI 연구자가 운영하는 서비스입니다.<br>
+      본 서비스는 AI 도구를 활용한 마케팅 지원이며, 결과는 사장님의 업종·규모·참여도에 따라 다를 수 있습니다.
+    </p>
+  </div>
+</section>
+
+<!-- 챗봇 위젯 — 비활성화 -->
+
+<script>
+// 탭 전환
+function switchTab(id) {
+  document.querySelectorAll('.example-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// 챗봇 — 비활성화
+/*
+function toggleChat() {
+  const box = document.getElementById('chatBox');
+  box.classList.toggle('open');
+}
+
+function openChatFromSection() {
+  const box = document.getElementById('chatBox');
+  box.classList.add('open');
+  const arrow = document.getElementById('chat-arrow');
+  if (arrow) arrow.style.opacity = '0.3';
+  setTimeout(() => {
+    document.querySelector('.chat-widget').scrollIntoView({ behavior: 'smooth', block: 'end' });
+  }, 200);
+}
+
+const botReplies = {
+  '미용실/네일': '미용실/네일 업종이시군요!\n노쇼 때문에 고민이 많으실 것 같아요.\n실제로 어떤 게 제일 불편하세요?',
+  '식당': '식당이시군요!\n주중 한산 때 프로모션 못 보내서 답답하신 분들이 많더라고요.\n혹시 비슷한 고민이 있으세요?',
+  '반찬가게': '반찬가게이시군요!\n날씨랑 재고 관리가 제일 힘드시죠.\n샘플 한번 보시겠어요?',
+  '학원': '학원이시군요!\n말 없이 그냥 안 오는 학생 때문에 걱정되실 것 같아요.\n성과 리포트 샘플 보여드릴까요?',
+};
+
+let talkCount = 0;
+
+function addMsg(text, type) {
+  const div = document.createElement('div');
+  div.className = 'msg ' + type;
+  div.textContent = text;
+  const msgs = document.getElementById('chatMessages');
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function showOptions(opts) {
+  const el = document.getElementById('chatOptions');
+  el.innerHTML = '';
+  opts.forEach(o => {
+    const btn = document.createElement('button');
+    btn.className = 'opt-btn';
+    btn.textContent = o;
+    btn.onclick = () => sendOption(o);
+    el.appendChild(btn);
+  });
+}
+
+function sendOption(val) {
+  addMsg(val, 'user');
+  talkCount++;
+  setTimeout(() => {
+    const reply = botReplies[val] || '더 자세히 말씀해주시면 도와드릴게요!';
+    addMsg(reply, 'bot');
+    if (talkCount >= 2) {
+      setTimeout(() => {
+        addMsg('카카오 채널로 오시면 사장님 상황에 맞게 직접 도와드릴 수 있어요 😊', 'bot');
+        showOptions(['카카오 채널 바로가기']);
+      }, 800);
+    }
+  }, 400);
+}
+
+function sendMsg() {
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if (!msg) return;
+  input.value = '';
+  addMsg(msg, 'user');
+  talkCount++;
+
+  const weatherKw = ['날씨', '비', '더워', '추워', '기온', '눈'];
+  const isWeather = weatherKw.some(k => msg.includes(k));
+
+  setTimeout(() => {
+    if (talkCount > 2) {
+      addMsg('카카오 채널로 오시면 더 자세히 도와드릴 수 있어요!', 'bot');
+      showOptions(['카카오 채널 바로가기']);
+    } else if (isWeather) {
+      addMsg('날씨 정보는 wttr.in 기준으로 알려드릴게요. (실제 구현 시 실시간 연동)', 'bot');
+    } else {
+      addMsg('사장님 업종을 먼저 알려주시면 더 잘 도와드릴 수 있어요!', 'bot');
+      showOptions(['미용실·네일', '식당', '반찬가게', '학원']);
+    }
+  }, 400);
+}
+*/
+
+// 스크롤 페이드인
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.15 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
